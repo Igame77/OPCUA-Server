@@ -456,7 +456,7 @@ export default function App() {
           </div>
 
           {/* Middle: APS Flowchart Visualization */}
-          <div className="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl p-3 flex flex-col min-h-0">
+          <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-3 flex flex-col shrink-0 min-h-0">
             <div className="flex items-center justify-between mb-2 shrink-0">
               <h2 className="text-[10px] font-bold uppercase text-slate-500 tracking-widest flex items-center">
                 <svg className="w-3.5 h-3.5 mr-1.5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
@@ -477,8 +477,8 @@ export default function App() {
             </div>
 
             {/* Flowchart blocks */}
-            <div className="flex-1 flex flex-col justify-center">
-              <div className="flex flex-wrap gap-x-1.5 gap-y-3 justify-center items-center">
+            <div className="flex-1 flex flex-col justify-start pt-2 overflow-y-auto custom-scrollbar">
+              <div className="flex flex-wrap gap-x-1.5 gap-y-3 justify-center items-center pb-2">
                 {FLOWCHART_BLOCKS.map((block, i) => {
                   const isActive = apsPhase === block.id;
                   const phaseInfo = APS_PHASES[block.id];
@@ -551,7 +551,7 @@ export default function App() {
           </div>
 
           {/* Bottom: Two log panels */}
-          <div className="flex gap-3 shrink-0" style={{ height: '9rem' }}>
+          <div className="flex-1 flex gap-3 min-h-0">
             {/* APS Algorithm Log */}
             <div ref={apsLogRef} className="flex-1 bg-violet-950/20 border border-violet-500/20 rounded-xl p-3 font-mono text-[10px] overflow-y-auto leading-relaxed flex flex-col">
               <div className="text-[9px] uppercase text-violet-400/60 font-bold mb-1 tracking-widest shrink-0">Лог APS-алгоритма</div>
