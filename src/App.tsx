@@ -555,7 +555,7 @@ export default function App() {
             {/* APS Algorithm Log */}
             <div ref={apsLogRef} className="flex-1 bg-violet-950/20 border border-violet-500/20 rounded-xl p-3 font-mono text-[10px] overflow-y-auto leading-relaxed flex flex-col">
               <div className="text-[9px] uppercase text-violet-400/60 font-bold mb-1 tracking-widest shrink-0">Лог APS-алгоритма</div>
-              <div className="flex-1 flex flex-col justify-end">
+              <div className="flex-1 flex flex-col justify-start">
                 {apsHistory.map((entry, i) => (
                   <div key={i} className={`mb-0.5 ${entry.includes('✓') ? 'text-emerald-400' : entry.includes('✗') ? 'text-red-400' : entry.includes('—') ? 'text-slate-500' : 'text-violet-300'}`}>
                     {entry}
@@ -567,7 +567,7 @@ export default function App() {
             {/* System Log */}
             <div className="flex-1 bg-black/40 border border-slate-700 rounded-xl p-3 font-mono text-[10px] overflow-y-auto leading-relaxed flex flex-col">
               <div className="text-[9px] uppercase text-slate-500 font-bold mb-1 tracking-widest shrink-0">Системный лог</div>
-              <div className="flex-1 flex flex-col justify-end">
+              <div className="flex-1 flex flex-col justify-start">
                 {logs.map((log) => (
                   <div key={log.id} className="text-sky-400 break-all mb-0.5">
                     [{log.time}] <span className={log.color}>{log.src}: {log.msg}</span>
