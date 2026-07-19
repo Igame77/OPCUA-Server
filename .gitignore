@@ -1,0 +1,47 @@
+# AI Studio and Metadata
+.aistudio/
+assets/.aistudio/
+metadata.json
+
+# Confidential & Env
+.env
+.env.*
+!.env.example
+credentials/
+secrets/
+
+# Node/React
+node_modules/
+build/
+dist/
+coverage/
+*.log
+
+# Java/Spring Boot
+java-server/target/
+java-server/.mvn/
+java-server/mvnw*
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Python (if any)
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env/
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# LaTeX Docs
+docs/latex/
+
+# Antigravity IDE (Confidential)
+.antigravity/

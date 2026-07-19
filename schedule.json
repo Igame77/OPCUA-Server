@@ -1,0 +1,1427 @@
+{
+  "queue" : [ {
+    "id" : "BATCH_1784469084832_944",
+    "name" : "Авто_Алюминий_321",
+    "material" : "Алюминий",
+    "weight" : 38.011512480008,
+    "priority" : 27,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 7,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "PRIORITIZED",
+    "totalProcessingTimeSec" : 0,
+    "steps" : [ ],
+    "createdAt" : 1784469084832,
+    "scheduledStartTime" : 0,
+    "scheduledEndTime" : 0
+  } ],
+  "current_tasks" : [ {
+    "id" : "BATCH_1784466109833_517",
+    "name" : "Заказ_B22_Медь",
+    "material" : "Медь",
+    "weight" : 33.855663041716205,
+    "priority" : 66,
+    "urgencyScore" : 30,
+    "materialScore" : 30,
+    "weightScore" : 6,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5830,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 729,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 1094,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1459,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 2188,
+      "completed" : false
+    } ],
+    "createdAt" : 1784466109833,
+    "scheduledStartTime" : 1784466421507,
+    "scheduledEndTime" : 1784472251507
+  }, {
+    "id" : "BATCH_1784466109833_173",
+    "name" : "Партия_4_Алюм",
+    "material" : "Алюминий",
+    "weight" : 28.84807344969186,
+    "priority" : 56,
+    "urgencyScore" : 31,
+    "materialScore" : 20,
+    "weightScore" : 5,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3654,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 439,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 659,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 878,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1318,
+      "completed" : false
+    } ],
+    "createdAt" : 1784466109833,
+    "scheduledStartTime" : 1784466429411,
+    "scheduledEndTime" : 1784470083411
+  }, {
+    "id" : "BATCH_1784466109832_428",
+    "name" : "Партия_1_Сталь",
+    "material" : "Сталь",
+    "weight" : 65.53062246556199,
+    "priority" : 73,
+    "urgencyScore" : 50,
+    "materialScore" : 10,
+    "weightScore" : 13,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5137,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 637,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 955,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1274,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1911,
+      "completed" : false
+    } ],
+    "createdAt" : 1784466109833,
+    "scheduledStartTime" : 1784466676510,
+    "scheduledEndTime" : 1784471813510
+  }, {
+    "id" : "BATCH_1784467058786_445",
+    "name" : "Авто_Сталь_566",
+    "material" : "Сталь",
+    "weight" : 68.76245899491369,
+    "priority" : 23,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 13,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5197,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 645,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 967,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1290,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1935,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467058787,
+    "scheduledStartTime" : 1784467070880,
+    "scheduledEndTime" : 1784472267880
+  }, {
+    "id" : "BATCH_1784467074794_102",
+    "name" : "Авто_Алюминий_101",
+    "material" : "Алюминий",
+    "weight" : 50.053250013322966,
+    "priority" : 30,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 10,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3960,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 480,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 720,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 960,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1440,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467074794,
+    "scheduledStartTime" : 1784467086898,
+    "scheduledEndTime" : 1784471046898
+  }, {
+    "id" : "BATCH_1784467090795_767",
+    "name" : "Авто_Сталь_554",
+    "material" : "Сталь",
+    "weight" : 40.28406179333496,
+    "priority" : 18,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 8,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4684,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 576,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 865,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1153,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1730,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467090795,
+    "scheduledStartTime" : 1784467102896,
+    "scheduledEndTime" : 1784471786896
+  }, {
+    "id" : "BATCH_1784467106794_289",
+    "name" : "Авто_Сталь_874",
+    "material" : "Сталь",
+    "weight" : 46.57450512587839,
+    "priority" : 23,
+    "urgencyScore" : 4,
+    "materialScore" : 10,
+    "weightScore" : 9,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4796,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 591,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 887,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1183,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1775,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467106794,
+    "scheduledStartTime" : 1784467158855,
+    "scheduledEndTime" : 1784471954855
+  }, {
+    "id" : "BATCH_1784467162794_41",
+    "name" : "Авто_Медь_732",
+    "material" : "Медь",
+    "weight" : 66.49156565672025,
+    "priority" : 53,
+    "urgencyScore" : 10,
+    "materialScore" : 30,
+    "weightScore" : 13,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 6594,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 831,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 1247,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1662,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 2494,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467162794,
+    "scheduledStartTime" : 1784467270899,
+    "scheduledEndTime" : 1784473864899
+  }, {
+    "id" : "BATCH_1784467274788_863",
+    "name" : "Авто_Сталь_191",
+    "material" : "Сталь",
+    "weight" : 36.730113585424945,
+    "priority" : 17,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 7,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4620,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 568,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 852,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1136,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1704,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467274788,
+    "scheduledStartTime" : 1784467286875,
+    "scheduledEndTime" : 1784471906875
+  }, {
+    "id" : "BATCH_1784467290800_22",
+    "name" : "Авто_Сталь_645",
+    "material" : "Сталь",
+    "weight" : 38.79318307553115,
+    "priority" : 17,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 7,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4657,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 573,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 859,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1146,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1719,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467290800,
+    "scheduledStartTime" : 1784467302887,
+    "scheduledEndTime" : 1784471959887
+  }, {
+    "id" : "BATCH_1784467306789_12",
+    "name" : "Авто_Алюминий_160",
+    "material" : "Алюминий",
+    "weight" : 59.23567625675438,
+    "priority" : 34,
+    "urgencyScore" : 3,
+    "materialScore" : 20,
+    "weightScore" : 11,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4091,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 497,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 746,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 995,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1493,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467306789,
+    "scheduledStartTime" : 1784467342885,
+    "scheduledEndTime" : 1784471433885
+  }, {
+    "id" : "BATCH_1784467509118_580",
+    "name" : "Авто_Сталь_376",
+    "material" : "Сталь",
+    "weight" : 57.992240382122844,
+    "priority" : 22,
+    "urgencyScore" : 1,
+    "materialScore" : 10,
+    "weightScore" : 11,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5002,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 619,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 928,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1238,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1857,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467509155,
+    "scheduledStartTime" : 1784467529220,
+    "scheduledEndTime" : 1784472531220
+  }, {
+    "id" : "BATCH_1784467533116_827",
+    "name" : "Авто_Сталь_638",
+    "material" : "Сталь",
+    "weight" : 23.82927578518243,
+    "priority" : 14,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 4,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4387,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 537,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 805,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1074,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1611,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467533116,
+    "scheduledStartTime" : 1784467545170,
+    "scheduledEndTime" : 1784471932170
+  }, {
+    "id" : "BATCH_1784467549106_529",
+    "name" : "Авто_Алюминий_85",
+    "material" : "Алюминий",
+    "weight" : 57.94416856968913,
+    "priority" : 31,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 11,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4072,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 495,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 742,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 990,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1485,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467549106,
+    "scheduledStartTime" : 1784467561192,
+    "scheduledEndTime" : 1784471633192
+  }, {
+    "id" : "BATCH_1784467565114_292",
+    "name" : "Авто_Алюминий_141",
+    "material" : "Алюминий",
+    "weight" : 56.23920603565805,
+    "priority" : 31,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 11,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4046,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 491,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 737,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 983,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1475,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467565114,
+    "scheduledStartTime" : 1784467577205,
+    "scheduledEndTime" : 1784471623205
+  }, {
+    "id" : "BATCH_1784467581109_45",
+    "name" : "Авто_Сталь_585",
+    "material" : "Сталь",
+    "weight" : 22.55923523454915,
+    "priority" : 14,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 4,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4365,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 534,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 801,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1068,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1602,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467581109,
+    "scheduledStartTime" : 1784467593184,
+    "scheduledEndTime" : 1784471958184
+  }, {
+    "id" : "BATCH_1784467597103_555",
+    "name" : "Авто_Алюминий_711",
+    "material" : "Алюминий",
+    "weight" : 38.82911518623995,
+    "priority" : 28,
+    "urgencyScore" : 1,
+    "materialScore" : 20,
+    "weightScore" : 7,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3797,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 458,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 687,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 917,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1375,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467597103,
+    "scheduledStartTime" : 1784467617185,
+    "scheduledEndTime" : 1784471414185
+  }, {
+    "id" : "BATCH_1784467621104_222",
+    "name" : "Авто_Алюминий_866",
+    "material" : "Алюминий",
+    "weight" : 30.390614996756764,
+    "priority" : 26,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 6,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3676,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 442,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 663,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 884,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1327,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467621104,
+    "scheduledStartTime" : 1784467633174,
+    "scheduledEndTime" : 1784471309174
+  }, {
+    "id" : "BATCH_1784467637098_785",
+    "name" : "Авто_Медь_569",
+    "material" : "Медь",
+    "weight" : 59.37766604423,
+    "priority" : 51,
+    "urgencyScore" : 10,
+    "materialScore" : 30,
+    "weightScore" : 11,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 6427,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 809,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 1213,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1618,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 2427,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467637098,
+    "scheduledStartTime" : 1784467745216,
+    "scheduledEndTime" : 1784474172216
+  }, {
+    "id" : "BATCH_1784467749116_75",
+    "name" : "Авто_Алюминий_715",
+    "material" : "Алюминий",
+    "weight" : 21.889456857406547,
+    "priority" : 24,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 4,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3555,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 426,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 639,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 852,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1278,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467749116,
+    "scheduledStartTime" : 1784467761197,
+    "scheduledEndTime" : 1784471316197
+  }, {
+    "id" : "BATCH_1784467765104_645",
+    "name" : "Авто_Алюминий_897",
+    "material" : "Алюминий",
+    "weight" : 57.48986241604685,
+    "priority" : 46,
+    "urgencyScore" : 15,
+    "materialScore" : 20,
+    "weightScore" : 11,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4066,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 494,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 741,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 988,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1483,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467765104,
+    "scheduledStartTime" : 1784467922738,
+    "scheduledEndTime" : 1784471988738
+  }, {
+    "id" : "BATCH_1784467979748_843",
+    "name" : "Авто_Алюминий_276",
+    "material" : "Алюминий",
+    "weight" : 51.057690572222455,
+    "priority" : 30,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 10,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3975,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 482,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 723,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 964,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1446,
+      "completed" : false
+    } ],
+    "createdAt" : 1784467979750,
+    "scheduledStartTime" : 1784467991847,
+    "scheduledEndTime" : 1784471966847
+  }, {
+    "id" : "BATCH_1784468015741_771",
+    "name" : "Авто_Алюминий_719",
+    "material" : "Алюминий",
+    "weight" : 36.0945007118694,
+    "priority" : 27,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 7,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3757,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 453,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 679,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 906,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1359,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468015741,
+    "scheduledStartTime" : 1784468025936,
+    "scheduledEndTime" : 1784471782936
+  }, {
+    "id" : "BATCH_1784468049795_478",
+    "name" : "Авто_Сталь_565",
+    "material" : "Сталь",
+    "weight" : 46.383346223977185,
+    "priority" : 19,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 9,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4792,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 591,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 886,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1182,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1773,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468049795,
+    "scheduledStartTime" : 1784468055430,
+    "scheduledEndTime" : 1784472847430
+  }, {
+    "id" : "BATCH_1784468079307_668",
+    "name" : "Авто_Медь_708",
+    "material" : "Медь",
+    "weight" : 59.469640813034644,
+    "priority" : 59,
+    "urgencyScore" : 18,
+    "materialScore" : 30,
+    "weightScore" : 11,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 6430,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 809,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 1214,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1619,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 2428,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468079307,
+    "scheduledStartTime" : 1784468270859,
+    "scheduledEndTime" : 1784474700859
+  }, {
+    "id" : "BATCH_1784468296245_147",
+    "name" : "Авто_Сталь_292",
+    "material" : "Сталь",
+    "weight" : 60.58760728430846,
+    "priority" : 22,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 12,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5049,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 625,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 938,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1250,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1876,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468296248,
+    "scheduledStartTime" : 1784468303338,
+    "scheduledEndTime" : 1784473352338
+  }, {
+    "id" : "BATCH_1784468328737_222",
+    "name" : "Авто_Медь_470",
+    "material" : "Медь",
+    "weight" : 35.29353379629851,
+    "priority" : 37,
+    "urgencyScore" : 0,
+    "materialScore" : 30,
+    "weightScore" : 7,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5865,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 734,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 1101,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1468,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 2202,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468328737,
+    "scheduledStartTime" : 1784468335822,
+    "scheduledEndTime" : 1784474200822
+  }, {
+    "id" : "BATCH_1784468361198_453",
+    "name" : "Авто_Сталь_136",
+    "material" : "Сталь",
+    "weight" : 30.122107897101884,
+    "priority" : 16,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 6,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4500,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 552,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 828,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1104,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1656,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468361198,
+    "scheduledStartTime" : 1784468368310,
+    "scheduledEndTime" : 1784472868310
+  }, {
+    "id" : "BATCH_1784468393692_294",
+    "name" : "Авто_Алюминий_646",
+    "material" : "Алюминий",
+    "weight" : 33.04193214565164,
+    "priority" : 26,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 6,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3714,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 447,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 671,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 894,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1342,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468393692,
+    "scheduledStartTime" : 1784468400786,
+    "scheduledEndTime" : 1784472114786
+  }, {
+    "id" : "BATCH_1784468426151_187",
+    "name" : "Авто_Алюминий_775",
+    "material" : "Алюминий",
+    "weight" : 41.082147514070606,
+    "priority" : 28,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 8,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3829,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 462,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 694,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 925,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1388,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468426151,
+    "scheduledStartTime" : 1784468433241,
+    "scheduledEndTime" : 1784472262241
+  }, {
+    "id" : "BATCH_1784468607802_372",
+    "name" : "Авто_Медь_423",
+    "material" : "Медь",
+    "weight" : 28.71622521100202,
+    "priority" : 35,
+    "urgencyScore" : 0,
+    "materialScore" : 30,
+    "weightScore" : 5,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5710,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 713,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 1070,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1427,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 2140,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468607804,
+    "scheduledStartTime" : 1784468619900,
+    "scheduledEndTime" : 1784474329900
+  }, {
+    "id" : "BATCH_1784468645285_643",
+    "name" : "Авто_Сталь_899",
+    "material" : "Сталь",
+    "weight" : 34.86914201712692,
+    "priority" : 16,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 6,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4586,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 563,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 845,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1127,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1691,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468645285,
+    "scheduledStartTime" : 1784468652396,
+    "scheduledEndTime" : 1784473238396
+  }, {
+    "id" : "BATCH_1784468677790_45",
+    "name" : "Авто_Сталь_618",
+    "material" : "Сталь",
+    "weight" : 65.04115535540838,
+    "priority" : 23,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 13,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5130,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 636,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 954,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1272,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1908,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468677790,
+    "scheduledStartTime" : 1784468684899,
+    "scheduledEndTime" : 1784473814899
+  }, {
+    "id" : "BATCH_1784468710288_483",
+    "name" : "Авто_Сталь_477",
+    "material" : "Сталь",
+    "weight" : 49.71988800887207,
+    "priority" : 19,
+    "urgencyScore" : 0,
+    "materialScore" : 10,
+    "weightScore" : 9,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4852,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 599,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 898,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1198,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1797,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468710288,
+    "scheduledStartTime" : 1784468717381,
+    "scheduledEndTime" : 1784473569381
+  }, {
+    "id" : "BATCH_1784468742778_118",
+    "name" : "Авто_Медь_566",
+    "material" : "Медь",
+    "weight" : 20.07189035333674,
+    "priority" : 34,
+    "urgencyScore" : 0,
+    "materialScore" : 30,
+    "weightScore" : 4,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5507,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 686,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 1029,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1373,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 2059,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468742778,
+    "scheduledStartTime" : 1784468749873,
+    "scheduledEndTime" : 1784474256873
+  }, {
+    "id" : "BATCH_1784468775226_941",
+    "name" : "Авто_Алюминий_40",
+    "material" : "Алюминий",
+    "weight" : 57.96723345791221,
+    "priority" : 31,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 11,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 4072,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 495,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 742,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 990,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1485,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468775226,
+    "scheduledStartTime" : 1784468787881,
+    "scheduledEndTime" : 1784472859881
+  }, {
+    "id" : "BATCH_1784468813250_314",
+    "name" : "Авто_Медь_895",
+    "material" : "Медь",
+    "weight" : 38.44241595889928,
+    "priority" : 58,
+    "urgencyScore" : 21,
+    "materialScore" : 30,
+    "weightScore" : 7,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 5936,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 743,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 1115,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 1487,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 2231,
+      "completed" : false
+    } ],
+    "createdAt" : 1784468813250,
+    "scheduledStartTime" : 1784469027004,
+    "scheduledEndTime" : 1784474963004
+  }, {
+    "id" : "BATCH_1784469052366_159",
+    "name" : "Авто_Алюминий_523",
+    "material" : "Алюминий",
+    "weight" : 41.33669549030212,
+    "priority" : 28,
+    "urgencyScore" : 0,
+    "materialScore" : 20,
+    "weightScore" : 8,
+    "assignedLineId" : "LINE_GALVANIC_1",
+    "orderInLine" : 1,
+    "status" : "SCHEDULED",
+    "totalProcessingTimeSec" : 3834,
+    "steps" : [ {
+      "equipmentId" : "BATH_DEGREASE",
+      "operation" : "01 Обезжиривание",
+      "durationSec" : 463,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ETCH",
+      "operation" : "02 Травление",
+      "durationSec" : 695,
+      "completed" : false
+    }, {
+      "equipmentId" : "BATH_ZINC",
+      "operation" : "03 Ванна цинка",
+      "durationSec" : 926,
+      "completed" : false
+    }, {
+      "equipmentId" : "DRYER",
+      "operation" : "04 Сушильная камера",
+      "durationSec" : 1390,
+      "completed" : false
+    } ],
+    "createdAt" : 1784469052369,
+    "scheduledStartTime" : 1784469059453,
+    "scheduledEndTime" : 1784472893453
+  } ]
+}
