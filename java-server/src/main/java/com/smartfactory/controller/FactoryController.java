@@ -99,4 +99,21 @@ public class FactoryController {
         private String batchName;
         private boolean insertAtFront;
     }
+
+    /**
+     * Toggles manual mode and updates corresponding state
+     */
+    @PostMapping("/toggle-manual")
+    public Map<String, Boolean> toggleManualMode() {
+        boolean newState = !apiState.isManualMode();
+        apiState.setManualMode(newState);
+        if (newState) {
+            apiState.setStatus("MANUAL_INTERVENTION");
+            apiState.setStep("ОЖИДАНИЕ_ОПЕРАТОРА (Ручной режим)");
+        } else {
+            apiState.setStatus("AUTO_NORMAL");
+            apiState.setStep("Возврат в автоматический режим");
+        }
+        return Map.of("manualMode", newState);
+    }
 }

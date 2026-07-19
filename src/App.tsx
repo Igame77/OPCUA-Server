@@ -136,11 +136,14 @@ export default function App() {
         });
       }
       if (e.code === 'KeyG' || e.key === 'g' || e.key === 'п') {
-        setManualMode(prev => {
-          const newState = !prev;
-          addLog('HW_BRIDGE', `Аварийное вмешательство: ${newState ? 'ВКЛЮЧЕНО' : 'ОТКЛЮЧЕНО'}`, newState ? 'text-red-400 font-bold' : 'text-emerald-400 font-bold');
-          return newState;
-        });
+        fetch('http://localhost:8080/api/toggle-manual', { method: 'POST' })
+          .then(res => res.json())
+          .then(data => {
+            const newState = data.manualMode;
+            setManualMode(newState);
+            addLog('HW_BRIDGE', `Аварийное вмешательство: ${newState ? 'ВКЛЮЧЕНО' : 'ОТКЛЮЧЕНО'}`, newState ? 'text-red-400 font-bold' : 'text-emerald-400 font-bold');
+          })
+          .catch(err => console.error(err));
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -239,23 +242,18 @@ export default function App() {
   const addTask = () => {
     const names = ['Новый_Заказ_Сталь', 'Срочный_Медь', 'Партия_Алюм', 'Тест_Пуск'];
     const name = names[Math.floor(Math.random() * names.length)] + '_' + Math.floor(Math.random() * 1000);
-    const material = name.includes('Медь') ? 'Медь' : name.includes('Алюм') ? 'Алюминий' : 'Сталь';
-    const newBatch: BatchInfo = {
-      id: 'B_' + Date.now(),
-      name,
-      material,
-      weight: +(20 + Math.random() * 50).toFixed(1),
-      priority: 0,
-      urgencyScore: 0,
-      materialScore: 0,
-      weightScore: 0,
-      status: 'WAITING',
-      totalProcessingTimeSec: 0,
-      orderInLine: 0,
-      assignedLineId: '',
-    };
-    setQueue(prev => [...prev, newBatch]);
-    addLog('REST_API', `POST /api/queue — '${name}' добавлена`, 'text-sky-300');
+    
+    fetch('http://localhost:8080/api/queue', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ taskName: name })
+    })
+      .then(res => res.json())
+      .then(data => {
+        setQueue(data.queue || []);
+        addLog('REST_API', `POST /api/queue — '${name}' добавлена`, 'text-sky-300');
+      })
+      .catch(err => console.error(err));
   };
 
   const currentPhaseInfo = APS_PHASES[apsPhase] || APS_PHASES.IDLE;
@@ -300,8 +298,14 @@ export default function App() {
           </div>
           <button
             onClick={() => {
-              setManualMode(!manualMode);
-              addLog('HW_BRIDGE', `Аварийное вмешательство: ${!manualMode ? 'ВКЛЮЧЕНО' : 'ОТКЛЮЧЕНО'}`, !manualMode ? 'text-red-400 font-bold' : 'text-emerald-400 font-bold');
+              fetch('http://localhost:8080/api/toggle-manual', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                  const newState = data.manualMode;
+                  setManualMode(newState);
+                  addLog('HW_BRIDGE', `Аварийное вмешательство: ${newState ? 'ВКЛЮЧЕНО' : 'ОТКЛЮЧЕНО'}`, newState ? 'text-red-400 font-bold' : 'text-emerald-400 font-bold');
+                })
+                .catch(err => console.error(err));
             }}
             className={`px-2 lg:px-4 py-2 border text-[10px] lg:text-xs font-bold rounded transition-colors uppercase whitespace-nowrap ${manualMode ? 'bg-emerald-600/20 border-emerald-500/50 text-emerald-500 hover:bg-emerald-600/40' : 'bg-red-600/20 border-red-500/50 text-red-500 hover:bg-red-600/40'}`}
           >
@@ -474,7 +478,7 @@ export default function App() {
 
             {/* Flowchart blocks */}
             <div className="flex-1 flex flex-col justify-center">
-              <div className="flex flex-wrap gap-1.5 justify-center items-center">
+              <div className="flex flex-wrap gap-x-1.5 gap-y-3 justify-center items-center">
                 {FLOWCHART_BLOCKS.map((block, i) => {
                   const isActive = apsPhase === block.id;
                   const phaseInfo = APS_PHASES[block.id];
@@ -485,7 +489,7 @@ export default function App() {
                   return (
                     <React.Fragment key={block.id}>
                       {i > 0 && (
-                        <svg className="w-3 h-3 shrink-0 text-slate-600" viewBox="0 0 12 12" fill="none">
+                        <svg className="w-3 h-3 shrink-0 text-slate-600 hidden sm:block" viewBox="0 0 12 12" fill="none">
                           <path d="M2 6 L10 6 M7 3 L10 6 L7 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       )}
