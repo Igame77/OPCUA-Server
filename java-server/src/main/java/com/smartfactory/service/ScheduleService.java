@@ -87,4 +87,13 @@ public class ScheduleService {
             return null;
         }
     }
+
+    public List<BatchInfo> removeTask(String taskName) {
+        synchronized (fileLock) {
+            ScheduleData data = readSchedule();
+            data.getQueue().removeIf(b -> b.getName().equals(taskName));
+            writeSchedule(data);
+            return data.getQueue();
+        }
+    }
 }

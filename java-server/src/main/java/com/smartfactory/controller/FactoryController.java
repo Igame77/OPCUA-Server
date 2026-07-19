@@ -43,11 +43,36 @@ public class FactoryController {
         return scheduleService.readSchedule();
     }
 
+    /**
+     * Возвращает системный лог (последние записи) для мобильного приложения.
+     */
+    @GetMapping("/logs")
+    public Map<String, Object> getLogs() {
+        return Map.of(
+                "systemLog", apiState.getSystemLog(),
+                "apsHistory", apiState.getApsHistory()
+        );
+    }
+
     @PostMapping("/queue")
     public Map<String, Object> addTask(@RequestBody TaskItem item) {
         List<?> updatedQueue = scheduleService.addTask(item.getTaskName());
+        apiState.addSystemLog("REST_API", "POST /api/queue — '" + item.getTaskName() + "' добавлена в очередь");
         return Map.of(
                 "message", "Задача '" + item.getTaskName() + "' успешно добавлена!",
+                "queue", updatedQueue
+        );
+    }
+
+    /**
+     * Удаляет задачу из очереди по имени.
+     */
+    @PostMapping("/delete-task")
+    public Map<String, Object> deleteTask(@RequestBody TaskItem item) {
+        List<?> updatedQueue = scheduleService.removeTask(item.getTaskName());
+        apiState.addSystemLog("REST_API", "DELETE — '" + item.getTaskName() + "' удалена из очереди");
+        return Map.of(
+                "message", "Задача '" + item.getTaskName() + "' удалена из очереди",
                 "queue", updatedQueue
         );
     }
@@ -83,9 +108,12 @@ public class FactoryController {
         apiState.setManualMode(false);
         apiState.setStatus("AUTO_NORMAL");
 
+        String action = item.isInsertAtFront() ? "ВКЛИНИТЬ" : "В_ОЧЕРЕДЬ";
+        apiState.addSystemLog("OPERATOR", "Ручное решение: '" + item.getBatchName() + "' → " + action);
+
         return Map.of(
                 "message", "Ручное решение принято: " + item.getBatchName(),
-                "action", item.isInsertAtFront() ? "ВКЛИНИТЬ" : "В_ОЧЕРЕДЬ"
+                "action", action
         );
     }
 
@@ -110,9 +138,11 @@ public class FactoryController {
         if (newState) {
             apiState.setStatus("MANUAL_INTERVENTION");
             apiState.setStep("ОЖИДАНИЕ_ОПЕРАТОРА (Ручной режим)");
+            apiState.addSystemLog("HW_BRIDGE", "Аварийное вмешательство: ВКЛЮЧЕНО");
         } else {
             apiState.setStatus("AUTO_NORMAL");
             apiState.setStep("Возврат в автоматический режим");
+            apiState.addSystemLog("HW_BRIDGE", "Аварийное вмешательство: ОТКЛЮЧЕНО");
         }
         return Map.of("manualMode", newState);
     }

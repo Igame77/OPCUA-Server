@@ -38,6 +38,9 @@ public class ApiState {
     // История APS-шагов (последние N записей для лога)
     private List<String> apsHistory = new ArrayList<>();
 
+    // Системный лог (последние 30 записей)
+    private List<LogEntry> systemLog = new ArrayList<>();
+
     /**
      * Добавляет запись в историю APS (хранит последние 20).
      */
@@ -46,5 +49,25 @@ public class ApiState {
         if (apsHistory.size() > 20) {
             apsHistory = new ArrayList<>(apsHistory.subList(apsHistory.size() - 20, apsHistory.size()));
         }
+    }
+
+    /**
+     * Добавляет запись в системный лог (хранит последние 30).
+     */
+    public synchronized void addSystemLog(String source, String message) {
+        String time = java.time.LocalTime.now().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+        systemLog.add(new LogEntry(time, source, message));
+        if (systemLog.size() > 30) {
+            systemLog = new ArrayList<>(systemLog.subList(systemLog.size() - 30, systemLog.size()));
+        }
+    }
+
+    @Data
+    @lombok.AllArgsConstructor
+    @lombok.NoArgsConstructor
+    public static class LogEntry {
+        private String time;
+        private String source;
+        private String message;
     }
 }
