@@ -1,0 +1,651 @@
+\documentclass[14pt, a4paper]{extarticle} 
+
+% Поддержка русского языка и кодировок
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+% Настройка полей (ГОСТ)
+\usepackage[left=3cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+% Графика
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+% Таблицы и списки
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\setlist{nosep}
+
+% Ссылки и метаданные
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Описание программных модулей системы APS},
+}
+
+% Вставка исходного кода
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen}\itshape,
+    keywordstyle=\color{blue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={а}{{\cyra}}1 {б}{{\cyrb}}1 {в}{{\cyrv}}1 {г}{{\cyrg}}1
+             {д}{{\cyrd}}1 {е}{{\cyre}}1 {ж}{{\cyrzh}}1 {з}{{\cyrz}}1
+             {и}{{\cyri}}1 {й}{{\cyrishrt}}1 {к}{{\cyrk}}1 {л}{{\cyrl}}1
+             {м}{{\cyrm}}1 {н}{{\cyrn}}1 {о}{{\cyro}}1 {п}{{\cyrp}}1
+             {р}{{\cyrr}}1 {с}{{\cyrs}}1 {т}{{\cyrt}}1 {у}{{\cyru}}1
+             {ф}{{\cyrf}}1 {х}{{\cyrh}}1 {ц}{{\cyrc}}1 {ч}{{\cyrch}}1
+             {ш}{{\cyrsh}}1 {щ}{{\cyrshch}}1 {ъ}{{\cyrhrdsn}}1 {ы}{{\cyrery}}1
+             {ь}{{\cyrsftsn}}1 {э}{{\cyrerev}}1 {ю}{{\cyryu}}1 {я}{{\cyrya}}1
+}
+
+\lstset{style=mystyle}
+
+\begin{document}
+
+% ========================================================================
+% ТИТУЛЬНЫЙ ЛИСТ
+% ========================================================================
+\begin{titlepage}
+\begin{center}
+\vspace*{2cm}
+
+\textbf{\Large ОПИСАНИЕ ПРОГРАММНЫХ МОДУЛЕЙ}\\[0.5cm]
+\textbf{\Large СИСТЕМЫ ПЛАНИРОВАНИЯ ПРОИЗВОДСТВА (APS)}\\[0.5cm]
+\textbf{\Large НА ОСНОВЕ ЦИФРОВОГО ДВОЙНИКА}\\[0.5cm]
+\textbf{\Large ГАЛЬВАНИЧЕСКОГО КОМПЛЕКСА}\\[2cm]
+
+{\large Приложение к диссертационной работе}\\[3cm]
+
+\vfill
+
+{\large 2026}
+\end{center}
+\end{titlepage}
+
+% ========================================================================
+\tableofcontents
+\newpage
+
+% ========================================================================
+\section{Введение}
+% ========================================================================
+
+Настоящий документ содержит подробное описание каждого программного модуля (скрипта), входящего в состав распределённой системы автоматизированного планирования производства (APS) для гальванического комплекса. Система представляет собой цифровой двойник гальванической линии цинкования и включает следующие подсистемы:
+
+\begin{enumerate}
+    \item \textbf{Серверное ядро} (Spring Boot, Java) --- реализация алгоритма APS, управление OPC UA сервером, REST API для взаимодействия с клиентскими приложениями;
+    \item \textbf{Визуальный симулятор} (PyGame, Python) --- клиент OPC UA, визуализирующий работу конвейера в реальном времени;
+    \item \textbf{Веб-дашборд} (React/Vite, TypeScript) --- интерактивная панель мониторинга состояния алгоритма и телеметрии;
+    \item \textbf{Мобильный терминал} (Android, Kotlin/Jetpack Compose) --- SCADA-терминал оператора для удалённого управления.
+\end{enumerate}
+
+Каждый модуль описан в абстрактной форме, пригодной для включения в раздел <<Программное обеспечение>> диссертационной работы.
+
+% ========================================================================
+\section{Архитектура системы}
+% ========================================================================
+
+Система использует многоуровневую клиент-серверную архитектуру с двумя каналами связи:
+
+\begin{itemize}
+    \item \textbf{OPC UA} (порт 4840) --- промышленный протокол обмена данными в реальном времени между сервером и PyGame-симулятором. Обеспечивает двунаправленную синхронизацию переменных с частотой 5~Гц;
+    \item \textbf{REST API} (порт 8080) --- HTTP-интерфейс для взаимодействия с веб-дашбордом и мобильным терминалом. Поддерживает поллинг с частотой 2~Гц.
+\end{itemize}
+
+Общая структура файлов серверного ядра организована в пакеты:
+
+\begin{table}[h!]
+\centering
+\caption{Пакетная структура серверного ядра}
+\begin{tabularx}{\textwidth}{|l|X|}
+\hline
+\textbf{Пакет} & \textbf{Назначение} \\
+\hline
+\texttt{com.smartfactory} & Точка входа приложения \\
+\texttt{com.smartfactory.model} & Модели данных (партии, оборудование, суперпозиция, расписание) \\
+\texttt{com.smartfactory.state} & Глобальное состояние системы (\texttt{ApiState}) \\
+\texttt{com.smartfactory.service} & Бизнес-логика алгоритма APS, планировщик, управление расписанием \\
+\texttt{com.smartfactory.controller} & REST-контроллер для внешних клиентов \\
+\texttt{com.smartfactory.opcua} & OPC UA сервер (Eclipse Milo) \\
+\hline
+\end{tabularx}
+\end{table}
+
+% ========================================================================
+\newpage
+\section{Серверное ядро (Java / Spring Boot)}
+% ========================================================================
+
+% ------------------------------------------------------------------------
+\subsection{SmartFactoryApplication.java --- Точка входа приложения}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.SmartFactoryApplication}\\
+\textbf{Размер:} 25 строк\\
+\textbf{Зависимости:} Spring Boot 3.x, Spring Scheduling
+
+\subsubsection{Назначение}
+Класс является единственной точкой входа в серверное приложение. Запускает контейнер Spring Boot, инициализирующий все компоненты системы (OPC UA сервер, REST API, сервисы планирования).
+
+\subsubsection{Ключевые элементы}
+\begin{itemize}
+    \item Аннотация \texttt{@EnableScheduling} --- активирует подсистему фоновых периодических задач, необходимую для циклического выполнения алгоритма APS и обновления датчиков;
+    \item Bean \texttt{TaskScheduler} --- пул из 5 потоков с префиксом \texttt{aps-scheduler-}, обеспечивающий параллельное выполнение циклов планирования (\texttt{globalSchedulerLoop}), обновления датчиков (\texttt{sensorUpdateLoop}) и синхронизации OPC UA (\texttt{syncWithOpcUa}).
+\end{itemize}
+
+\subsubsection{Обоснование проектного решения}
+Использование пула из 5 потоков обусловлено необходимостью одновременного выполнения нескольких периодических задач с различной частотой (200~мс, 1~с, 8~с) без взаимной блокировки. Стандартный \texttt{TaskScheduler} Spring Boot содержит лишь 1 поток, что приводит к задержкам в алгоритме APS при длительных операциях ввода-вывода.
+
+
+% ------------------------------------------------------------------------
+\subsection{ApiState.java --- Глобальное состояние системы}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.state.ApiState}\\
+\textbf{Размер:} 71 строка\\
+\textbf{Аннотации:} \texttt{@Component}, \texttt{@Data} (Lombok)
+
+\subsubsection{Назначение}
+Единственный Spring-компонент (синглтон), инкапсулирующий всё текущее состояние системы. Служит связующим элементом между OPC UA сервером, REST API, алгоритмом APS и клиентскими приложениями.
+
+\subsubsection{Группы полей}
+
+\begin{table}[h!]
+\centering
+\caption{Структура полей ApiState}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Поле} & \textbf{Тип} & \textbf{Описание} \\
+\hline
+\texttt{temperature} & \texttt{int} & Температура гальванической ванны (°C) \\
+\texttt{humidity} & \texttt{int} & Влажность в цехе (\%) \\
+\texttt{doorClosed} & \texttt{boolean} & Состояние двери безопасности \\
+\texttt{manualMode} & \texttt{boolean} & Флаг ручного вмешательства оператора \\
+\texttt{simRunning} & \texttt{boolean} & Флаг работы симуляции (запускается клиентом) \\
+\texttt{status} & \texttt{String} & Текстовый статус системы \\
+\texttt{step} & \texttt{String} & Текущий шаг алгоритма \\
+\texttt{apsPhase} & \texttt{String} & Идентификатор фазы алгоритма для визуализации \\
+\texttt{utilizationCoeff} & \texttt{double} & Коэффициент загруженности оборудования [0..1] \\
+\texttt{processingTimeEstimate} & \texttt{int} & Расчётное время обработки (сек) \\
+\texttt{canIncludeResult} & \texttt{boolean} & Результат проверки возможности включения \\
+\texttt{currentBatch} & \texttt{String} & Имя обрабатываемой партии \\
+\texttt{rejectionCause} & \texttt{String} & Причина отказа в включении \\
+\texttt{apsHistory} & \texttt{List<String>} & Кольцевой буфер лога APS (20 записей) \\
+\texttt{systemLog} & \texttt{List<LogEntry>} & Кольцевой буфер системного лога (30 записей) \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsubsection{Потокобезопасность}
+Методы \texttt{addApsHistoryEntry()} и \texttt{addSystemLog()} объявлены как \texttt{synchronized}, что обеспечивает атомарность операций записи в кольцевые буферы при конкурентном доступе из нескольких потоков планировщика.
+
+
+% ------------------------------------------------------------------------
+\subsection{BatchInfo.java --- Модель производственной партии}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.model.BatchInfo}\\
+\textbf{Размер:} 85 строк
+
+\subsubsection{Назначение}
+Представляет полную информацию о производственной партии (заказе) на всех этапах жизненного цикла --- от постановки в очередь до завершения обработки. Включает вложенный класс \texttt{ProcessingStep}, описывающий отдельный этап обработки на конкретном устройстве.
+
+\subsubsection{Жизненный цикл партии}
+Поле \texttt{status} принимает одно из значений:
+\begin{enumerate}
+    \item \texttt{WAITING} --- партия поставлена в очередь;
+    \item \texttt{PRIORITIZED} --- приоритет рассчитан, линия назначена;
+    \item \texttt{SCHEDULED} --- включена в расписание;
+    \item \texttt{ACTIVE} --- выполняется обработка;
+    \item \texttt{COMPLETED} --- обработка завершена;
+    \item \texttt{REJECTED} --- включение невозможно.
+\end{enumerate}
+
+\subsubsection{Фабричный метод}
+Метод \texttt{fromLegacyName(String name)} обеспечивает обратную совместимость со строковым форматом очереди. Автоматически определяет тип материала и вес по ключевым словам в названии (<<Сталь>>, <<Медь>>, <<Алюм>>), генерирует уникальный идентификатор на основе текущего времени.
+
+
+% ------------------------------------------------------------------------
+\subsection{ComplexParameters.java --- Параметры производственного комплекса}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.model.ComplexParameters}\\
+\textbf{Размер:} 106 строк
+
+\subsubsection{Назначение}
+Соответствует цилиндру <<Параметры комплекса>> на блок-схеме алгоритма APS. Инкапсулирует информацию об оборудовании (5 устройств: 3 ванны, сушильная камера, мостовой кран) и производственных линиях.
+
+\subsubsection{Ключевые вложенные классы}
+\begin{itemize}
+    \item \textbf{\texttt{Equipment}} --- описание одного исполнительного устройства: идентификатор, название, максимальная ёмкость (кг), текущая загрузка, базовое время обработки (сек), флаг доступности;
+    \item \textbf{\texttt{ProductionLine}} --- описание производственной линии: упорядоченный список идентификаторов устройств, определяющий маршрут обработки.
+\end{itemize}
+
+\subsubsection{Расчёт загруженности}
+Метод \texttt{getAverageUtilization()} вычисляет средний коэффициент загруженности $U_{avg}$ как:
+\[
+U_{avg} = \frac{1}{N} \sum_{i=1}^{N} \frac{L_i}{C_i}
+\]
+где $L_i$ --- текущая загрузка $i$-го устройства, $C_i$ --- его максимальная ёмкость, $N$ --- количество устройств с ненулевой ёмкостью.
+
+Порог критической загруженности установлен в $U_{crit} = 0{,}85$ (85\%).
+
+
+% ------------------------------------------------------------------------
+\subsection{SuperpositionData.java --- Файл суперпозиции}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.model.SuperpositionData}\\
+\textbf{Размер:} 64 строки
+
+\subsubsection{Назначение}
+Соответствует цилиндру <<Файл суперпозиции>> на блок-схеме. Содержит наложение расчётного времени обработки на загрузку устройств. Представляет собой временну́ю карту доступности оборудования в рамках текущей смены.
+
+\subsubsection{Структура данных}
+\begin{itemize}
+    \item \textbf{\texttt{TimeSlot}} --- временной интервал на конкретном устройстве: время начала и конца (секунды от начала смены), флаг занятости, идентификатор партии-владельца;
+    \item \textbf{\texttt{FitResult}} --- результат сопоставления одной партии с расписанием: возможность включения, причина отказа, предложенные временны́е рамки, требуемая и доступная ёмкость;
+    \item \textbf{\texttt{freeIntervals}} --- список свободных интервалов, вычисленных по инверсии занятых слотов.
+\end{itemize}
+
+
+% ------------------------------------------------------------------------
+\subsection{ActionSequence.java --- Последовательность действий}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.model.ActionSequence}\\
+\textbf{Размер:} 68 строк
+
+\subsubsection{Назначение}
+Соответствует блокам <<Расчёт последовательности действий>> и <<Утверждение последовательности действий (расписания)>> на блок-схеме.
+
+\subsubsection{Вложенный класс Action}
+Каждый шаг содержит: порядковый номер, идентификатор и имя устройства, операцию, время начала (сек от начала смены), длительность (сек), статус (\texttt{PLANNED}, \texttt{APPROVED}, \texttt{IN\_PROGRESS}, \texttt{COMPLETED}, \texttt{SKIPPED}).
+
+\subsubsection{Механизм пересчёта}
+Поля \texttt{needsRecalculation} и \texttt{recalculationCount} реализуют цикл <<Пересчитать?~$\rightarrow$~ДА~$\rightarrow$~B>> из блок-схемы. При каждом отказе утверждения счётчик инкрементируется, и если его значение не превышает 3, алгоритм возвращается к началу цикла.
+
+
+% ------------------------------------------------------------------------
+\subsection{ApsAlgorithmService.java --- Центральный сервис APS-алгоритма}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.service.ApsAlgorithmService}\\
+\textbf{Размер:} 718 строк\\
+\textbf{Зависимости:} ApiState, ScheduleService
+
+\subsubsection{Назначение}
+Ключевой модуль системы. Каждый публичный метод соответствует конкретному блоку блок-схемы алгоритма APS. Методы вызываются последовательно из \texttt{SimulationService.globalSchedulerLoop()}.
+
+\subsubsection{Соответствие методов блокам блок-схемы}
+
+\begin{longtable}{|p{5.5cm}|p{5cm}|p{4.5cm}|}
+\hline
+\textbf{Метод} & \textbf{Блок блок-схемы} & \textbf{Ключевая функция} \\
+\hline
+\endhead
+\texttt{checkComplexActivity()} & Проверка активности комплекса & Проверка \texttt{simRunning}, обновление загрузки оборудования \\
+\hline
+\texttt{checkQueuePresence()} & Определение наличия очереди & Чтение файла расписания, проверка пустоты \\
+\hline
+\texttt{determineBatchPriority()} & Определение приоритета партии & Вычисление $P = U + M + W$, сортировка, назначение линии \\
+\hline
+\texttt{calculateUtilization()} & Расчёт коэффициента загруженности & $U_{avg} = \frac{1}{N}\sum\frac{L_i}{C_i}$ \\
+\hline
+\texttt{calculateProcessingTime()} & Расчёт времени обработки & Суммирование по устройствам с учётом материала \\
+\hline
+\texttt{calculateFreeIntervals()} & Расчёт свободных интервалов & Инверсия занятых слотов суперпозиции \\
+\hline
+\texttt{compareWithRealSelection()} & Сопоставление с выборкой & Проверка: $U_{avg} < U_{crit}$, $t_{end} < T_{shift}$, доступность \\
+\hline
+\texttt{calculateActionSequence()} & Расчёт последовательности & Генерация шагов по маршруту линии \\
+\hline
+\texttt{approveSequence()} & Утверждение расписания & Проверка коллизий, утверждение или отказ \\
+\hline
+\texttt{determineRejectionAndRecalculate()} & Причина отказа / Пересчитать? & Анализ причины, решение о возврате к B или переход к C \\
+\hline
+\texttt{fillScheduleWithAdditionalData()} & Заполнение расписания & Перенос партии из очереди в текущие задачи \\
+\hline
+\texttt{saveAndExportSchedule()} & Сохранение и выгрузка & Запись \texttt{schedule.json} на диск \\
+\hline
+\texttt{switchToManualMode()} & Переход E (ручной режим) & Установка \texttt{manualMode = true} \\
+\hline
+\texttt{manualQueueDecision()} & Ручное решение оператора & Вклинить / поставить в конец \\
+\hline
+\caption{Соответствие методов ApsAlgorithmService блокам блок-схемы}
+\end{longtable}
+
+\subsubsection{Формула расчёта приоритета}
+Приоритет партии $P$ вычисляется как сумма трёх компонентов:
+\[
+P = U + M + W
+\]
+где:
+\begin{itemize}
+    \item $U$ --- балл срочности (от 0 до 50), определяемый как $U = \min(50,\, t_{wait} / 10)$, где $t_{wait}$ --- время ожидания в секундах;
+    \item $M$ --- балл по типу материала: Медь = 30, Алюминий = 20, Сталь = 10;
+    \item $W$ --- балл по весу: $W = \min(20,\, m / 5)$, где $m$ --- масса партии в кг.
+\end{itemize}
+
+
+% ------------------------------------------------------------------------
+\subsection{SimulationService.java --- Планировщик и симулятор датчиков}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.service.SimulationService}\\
+\textbf{Размер:} 284 строки\\
+\textbf{Периодичность:} \texttt{sensorUpdateLoop} --- 1~с, \texttt{globalSchedulerLoop} --- 8~с
+
+\subsubsection{Назначение}
+Содержит два фоновых цикла, выполняемых Spring Scheduler:
+
+\begin{enumerate}
+    \item \textbf{\texttt{sensorUpdateLoop()}} (каждую секунду) --- имитирует показания датчиков: температура (55--65~°C), влажность (15--30\%), состояние двери. В продакшн-версии заменяется чтением данных с COM-порта через jSerialComm;
+    \item \textbf{\texttt{globalSchedulerLoop()}} (каждые 8 секунд) --- выполняет полный цикл алгоритма APS по блок-схеме, последовательно вызывая 12 методов \texttt{ApsAlgorithmService}. Включает искусственные задержки (\texttt{Thread.sleep}) между фазами для наглядности визуализации.
+\end{enumerate}
+
+\subsubsection{Механизм аварийного останова}
+При открытии двери безопасности (\texttt{doorClosed = false}) автоматически активируется ручной режим с установкой \texttt{status = "MANUAL\_INTERVENTION"}. Восстановление штатного режима происходит при закрытии двери.
+
+
+% ------------------------------------------------------------------------
+\subsection{ScheduleService.java --- Управление файлом расписания}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.service.ScheduleService}\\
+\textbf{Размер:} 100 строк\\
+\textbf{Формат хранения:} JSON (\texttt{schedule.json})
+
+\subsubsection{Назначение}
+Обеспечивает потокобезопасное чтение и запись файла расписания \texttt{schedule.json}, содержащего два массива: \texttt{queue} (очередь ожидающих партий) и \texttt{current\_tasks} (партии в работе). Все операции защищены объектом \texttt{fileLock} с использованием блока \texttt{synchronized}.
+
+\subsubsection{Методы}
+\begin{itemize}
+    \item \texttt{readSchedule()} --- десериализация JSON в объект \texttt{ScheduleData};
+    \item \texttt{writeSchedule()} --- сериализация с форматированием;
+    \item \texttt{addTask(String)} --- добавление новой партии в конец очереди;
+    \item \texttt{popTask()} --- извлечение первой партии и перенос в \texttt{current\_tasks};
+    \item \texttt{removeTask(String)} --- удаление партии из очереди по имени.
+\end{itemize}
+
+
+% ------------------------------------------------------------------------
+\subsection{FactoryController.java --- REST API контроллер}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.controller.FactoryController}\\
+\textbf{Размер:} 140 строк\\
+\textbf{Базовый путь:} \texttt{/api}
+
+\subsubsection{Назначение}
+Предоставляет RESTful HTTP-интерфейс для взаимодействия с веб-дашбордом и мобильным Android-приложением. Поддерживает CORS (\texttt{@CrossOrigin(origins = "*")}) для кросс-доменных запросов.
+
+\subsubsection{Эндпоинты}
+
+\begin{longtable}{|l|l|p{7cm}|}
+\hline
+\textbf{Метод} & \textbf{URL} & \textbf{Описание} \\
+\hline
+\endhead
+GET & \texttt{/api/state} & Полное состояние системы (ApiState) \\
+\hline
+GET & \texttt{/api/queue} & Очередь и текущие задачи \\
+\hline
+GET & \texttt{/api/aps-state} & Расширенное состояние APS с данными оборудования \\
+\hline
+GET & \texttt{/api/logs} & Системный лог и история APS \\
+\hline
+POST & \texttt{/api/queue} & Добавление задачи в очередь \\
+\hline
+POST & \texttt{/api/delete-task} & Удаление задачи из очереди \\
+\hline
+POST & \texttt{/api/toggle-manual} & Переключение ручного/авто режима \\
+\hline
+POST & \texttt{/api/manual-decision} & Ручное решение оператора (вклинить/в конец) \\
+\hline
+\caption{REST API эндпоинты}
+\end{longtable}
+
+
+% ------------------------------------------------------------------------
+\subsection{OpcUaServerManager.java --- Менеджер OPC UA сервера}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.opcua.OpcUaServerManager}\\
+\textbf{Размер:} 80 строк\\
+\textbf{Библиотека:} Eclipse Milo 0.6.x
+
+\subsubsection{Назначение}
+Инициализирует OPC UA сервер на порту 4840 при старте приложения (\texttt{@PostConstruct}) и выполняет периодическую синхронизацию (каждые 200~мс) значений OPC UA переменных с объектом \texttt{ApiState}.
+
+\subsubsection{Цикл синхронизации}
+Метод \texttt{syncWithOpcUa()} (периодичность 200~мс) проверяет активность клиента и выполняет:
+\begin{enumerate}
+    \item \textbf{Чтение} --- переменные \texttt{SimulationRunning} и \texttt{ManualOverride}, управляемые PyGame-клиентом, копируются в \texttt{ApiState};
+    \item \textbf{Запись} --- текущий статус и шаг алгоритма из \texttt{ApiState} записываются в OPC UA переменные для отображения в PyGame.
+\end{enumerate}
+
+
+% ------------------------------------------------------------------------
+\subsection{FactoryNamespace.java --- OPC UA пространство имён}
+% ------------------------------------------------------------------------
+
+\textbf{Путь:} \texttt{com.smartfactory.opcua.FactoryNamespace}\\
+\textbf{Размер:} 214 строк\\
+\textbf{URI пространства:} \texttt{http://factory-aps.local}
+
+\subsubsection{Назначение}
+Определяет структуру OPC UA узлов, совместимую с PyGame-клиентом. Реализует двунаправленный обмен данными через 4 переменных в узле \texttt{8\_Global\_Scheduler}:
+
+\begin{table}[h!]
+\centering
+\caption{OPC UA переменные}
+\begin{tabularx}{\textwidth}{|l|l|l|X|}
+\hline
+\textbf{Имя} & \textbf{Тип} & \textbf{Доступ} & \textbf{Описание} \\
+\hline
+\texttt{SimulationRunning} & Boolean & R/W & Управление запуском/остановкой симуляции \\
+\texttt{ManualOverride} & Boolean & R/W & Переключение ручного режима \\
+\texttt{SystemStatus} & String & R/W & Текущий статус алгоритма \\
+\texttt{CurrentAlgorithmStep} & String & R/W & Текстовое описание текущего шага \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsubsection{Детектирование клиента}
+Метод \texttt{isClientActive()} возвращает \texttt{true}, если последнее обращение клиента к любому узлу произошло менее 5 секунд назад. Это позволяет серверу определить, подключён ли PyGame-симулятор.
+
+
+% ========================================================================
+\newpage
+\section{Визуальный симулятор (Python / PyGame)}
+% ========================================================================
+
+\subsection{main.py --- OPC UA клиент и визуализация конвейера}
+
+\textbf{Путь:} \texttt{SimulatorR-PRO/SimOPC/main.py}\\
+\textbf{Язык:} Python 3.10+\\
+\textbf{Зависимости:} PyGame, asyncua, asyncio, aiohttp
+
+\subsubsection{Назначение}
+Графический клиент OPC UA, визуализирующий работу гальванического конвейера в окне PyGame. Отображает перемещение деталей по ваннам, работу мостового крана, показания датчиков. Одновременно выполняет роль OPC UA клиента, записывая управляющие переменные (\texttt{SimulationRunning}, \texttt{ManualOverride}) и считывая статус алгоритма.
+
+\subsubsection{Основные подсистемы}
+\begin{enumerate}
+    \item \textbf{Рендеринг конвейера} --- отрисовка 3 ванн (обезжиривание, травление, цинкование), мостового крана на рельсе, деталей в процессе обработки;
+    \item \textbf{OPC UA клиент} --- асинхронное подключение к \texttt{opc.tcp://localhost:4840}, циклическое чтение/запись переменных с частотой 10~Гц;
+    \item \textbf{API-интеграция} --- асинхронный поллинг REST API (\texttt{GET /api/queue}) для получения списка текущих задач и автоматического спавна деталей на конвейере;
+    \item \textbf{Управление клавиатурой} --- клавиша Space запускает/останавливает симуляцию, клавиша G переключает ручной режим.
+\end{enumerate}
+
+\subsubsection{Механизм спавна деталей}
+Функция \texttt{api\_poll\_task()} периодически запрашивает список \texttt{current\_tasks} у REST API сервера. Для каждой задачи, ещё не представленной на конвейере, создаётся новый игровой объект <<деталь>> с уникальным именем, назначенным маршрутом по ваннам и визуальным представлением.
+
+
+% ========================================================================
+\newpage
+\section{Веб-дашборд (React / TypeScript)}
+% ========================================================================
+
+\subsection{App.tsx --- Главный компонент интерфейса}
+
+\textbf{Путь:} \texttt{src/App.tsx}\\
+\textbf{Размер:} 702 строки\\
+\textbf{Фреймворк:} React 18 (Vite), Tailwind CSS v4
+
+\subsubsection{Назначение}
+Интерактивная SCADA-панель, отображающая в реальном времени состояние алгоритма APS, телеметрию датчиков, визуализацию блок-схемы, производственную очередь и системные логи.
+
+\subsubsection{Структура интерфейса}
+Интерфейс разделён на 5 зон:
+
+\begin{enumerate}
+    \item \textbf{Левая панель} --- телеметрия (температура, влажность, дверь, оборудование), часы симуляции;
+    \item \textbf{Центр --- верх} --- анимированная визуализация гальванической линии (3 ванны, мостовой кран);
+    \item \textbf{Центр --- середина} --- блок-схема APS с подсветкой активного блока;
+    \item \textbf{Центр --- низ} --- два лога: APS-алгоритм (фиолетовый) и системный (чёрный);
+    \item \textbf{Правая панель} --- очередь задач (карточки с приоритетами) и задачи в работе.
+\end{enumerate}
+
+\subsubsection{Механизм поллинга}
+Каждые 500~мс компонент выполняет два запроса:
+\begin{itemize}
+    \item \texttt{GET /api/aps-state} --- обновление всех метрик APS, состояния оборудования, истории;
+    \item \texttt{GET /api/queue} --- обновление очереди и текущих задач.
+\end{itemize}
+
+\subsubsection{Визуализация блок-схемы}
+13 блоков блок-схемы определены в массиве \texttt{FLOWCHART\_BLOCKS}. Текущая фаза \texttt{apsPhase} подсвечивается синим свечением (\texttt{shadow}) с анимированным индикатором. Пройденные фазы окрашиваются в зелёный, будущие --- в серый.
+
+
+% ========================================================================
+\newpage
+\section{Мобильный терминал (Android / Kotlin)}
+% ========================================================================
+
+\subsection{MainActivity.kt --- UI-слой приложения}
+
+\textbf{Путь:} \texttt{app/src/main/java/com/example/MainActivity.kt}\\
+\textbf{Размер:} 477 строк\\
+\textbf{Фреймворк:} Jetpack Compose, Material Design 3
+
+\subsubsection{Назначение}
+SCADA-терминал оператора для мобильного устройства. Позволяет удалённо контролировать производственный процесс: просмотр телеметрии, управление очередью задач, добавление новых партий.
+
+\subsubsection{Composable-функции}
+\begin{itemize}
+    \item \texttt{SmartFactoryScreen} --- корневой экран, компоновка карточек;
+    \item \texttt{TelemetryCard} --- карточка телеметрии: температура, влажность, дверь, график истории температуры (библиотека Vico);
+    \item \texttt{AlgorithmStatusCard} --- статус APS-модуля с мигающим индикатором ручного режима;
+    \item \texttt{QueueManagementCard} --- кнопка открытия диалога управления очередью;
+    \item \texttt{QueueManagementDialog} --- полноэкранный диалог: список задач с цветными индикаторами, поле ввода новой партии, кнопка добавления.
+\end{itemize}
+
+% ------------------------------------------------------------------------
+\subsection{MainViewModel.kt --- Бизнес-логика приложения}
+
+\textbf{Путь:} \texttt{app/src/main/java/com/example/MainViewModel.kt}\\
+\textbf{Размер:} 97 строк\\
+\textbf{Архитектура:} MVVM (ViewModel + StateFlow)
+
+\subsubsection{Назначение}
+Содержит реактивные потоки данных (\texttt{StateFlow}) для всех состояний UI и функции взаимодействия с REST API.
+
+\subsubsection{Поллинг}
+Два параллельных цикла в \texttt{viewModelScope}:
+\begin{itemize}
+    \item \texttt{getState()} --- каждые 1500~мс, обновление телеметрии и статуса;
+    \item \texttt{getQueue()} --- каждые 3000~мс, обновление очереди задач.
+\end{itemize}
+
+% ------------------------------------------------------------------------
+\subsection{ApiService.kt --- Сетевой слой}
+
+\textbf{Путь:} \texttt{app/src/main/java/com/example/api/ApiService.kt}\\
+\textbf{Размер:} 71 строка\\
+\textbf{Библиотеки:} Retrofit 2, Moshi
+
+\subsubsection{Назначение}
+Определяет модели данных (\texttt{SystemState}, \texttt{QueueState}, \texttt{TaskRequest}, \texttt{TaskResponse}) и интерфейс REST-клиента. Объект \texttt{RetrofitClient} реализует шаблон <<ленивая инициализация>> с возможностью динамической смены IP-адреса сервера.
+
+
+% ========================================================================
+\newpage
+\section{Вспомогательные файлы}
+% ========================================================================
+
+\subsection{schedule.json --- Файл расписания}
+
+Персистентное хранилище состояния очереди и текущих задач. Формат:
+
+\begin{lstlisting}[language=Java, caption=Структура schedule.json]
+{
+  "queue": [
+    {
+      "id": "BATCH_1721000000_001",
+      "name": "...",
+      "material": "...",
+      "weight": 45.0,
+      "priority": 0,
+      "status": "WAITING",
+      "steps": []
+    }
+  ],
+  "current_tasks": [ ... ]
+}
+\end{lstlisting}
+
+\subsection{index.css --- Стили веб-дашборда}
+
+Содержит импорт Tailwind CSS v4 и пользовательские стили для полосы прокрутки (\texttt{custom-scrollbar}) в логовых панелях.
+
+\subsection{main.tsx --- Точка входа React}
+
+Минимальный файл, рендерящий корневой компонент \texttt{App} в DOM-элемент \texttt{\#root}.
+
+
+% ========================================================================
+\newpage
+\section{Заключение}
+% ========================================================================
+
+Разработанная система включает \textbf{15 программных модулей}, распределённых по 4 подсистемам. Общий объём исходного кода составляет более \textbf{2500 строк} (без учёта конфигурационных файлов и зависимостей). 
+
+Ключевой особенностью архитектуры является полное соответствие программной реализации алгоритма APS блок-схеме, представленной в теоретической части диссертации: каждый блок блок-схемы реализован отдельным методом в классе \texttt{ApsAlgorithmService}, что обеспечивает прослеживаемость от теории к коду и упрощает верификацию корректности.
+
+Система обеспечивает три канала визуализации состояния алгоритма:
+\begin{enumerate}
+    \item PyGame-симулятор --- визуализация физического конвейера в реальном времени;
+    \item Веб-дашборд --- визуализация блок-схемы, метрик и логов для инженера;
+    \item Мобильный терминал --- удалённый контроль для оператора.
+\end{enumerate}
+
+\end{document}
