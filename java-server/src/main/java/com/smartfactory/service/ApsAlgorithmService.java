@@ -231,31 +231,28 @@ public class ApsAlgorithmService {
                     .findFirst().orElse(null);
             if (eq == null) continue;
 
-            // Коэффициент материала (разные материалы обрабатываются с разной скоростью)
-            double materialCoeff;
-            switch (batch.getMaterial()) {
-                case "Медь":     materialCoeff = 1.3; break;
-                case "Алюминий": materialCoeff = 0.8; break;
-                case "Сталь":    materialCoeff = 1.0; break;
-                default:         materialCoeff = 1.0; break;
+            int stepTime;
+            if (eqId.contains("BATH") || eqId.contains("DRYER")) {
+                // Коэффициент материала (разные материалы обрабатываются с разной скоростью)
+                double materialCoeff;
+                switch (batch.getMaterial()) {
+                    case "Медь":     materialCoeff = 1.3; break;
+                    case "Алюминий": materialCoeff = 0.8; break;
+                    case "Сталь":    materialCoeff = 1.0; break;
+                    default:         materialCoeff = 1.0; break;
+                }
+
+                // Коэффициент веса (тяжелее → дольше)
+                double weightCoeff = 0.8 + (batch.getWeight() / 100.0) * 0.4;
+                stepTime = (int)(eq.getProcessingTimeSec() * materialCoeff * weightCoeff);
+            } else {
+                // Для роботов и конвейеров время фиксированное
+                stepTime = eq.getProcessingTimeSec();
             }
-
-            // Коэффициент веса (тяжелее → дольше)
-            double weightCoeff = 0.8 + (batch.getWeight() / 100.0) * 0.4;
-
-            int stepTime = (int)(eq.getProcessingTimeSec() * materialCoeff * weightCoeff);
 
             steps.add(new BatchInfo.ProcessingStep(
                     eqId, eq.getName(), stepTime, false));
             totalTime += stepTime;
-        }
-
-        // Добавляем время крана (перемещения между ваннами)
-        int craneMoves = line.getEquipmentIds().size() - 1;
-        ComplexParameters.Equipment crane = complexParams.getEquipment().stream()
-                .filter(e -> e.getId().equals("CRANE")).findFirst().orElse(null);
-        if (crane != null) {
-            totalTime += craneMoves * crane.getProcessingTimeSec();
         }
 
         batch.setSteps(steps);
@@ -263,7 +260,7 @@ public class ApsAlgorithmService {
         apiState.setProcessingTimeEstimate(totalTime);
 
         addApsLog("Расчётное время: " + formatTime(totalTime) +
-                " (" + steps.size() + " этапов + " + craneMoves + " перемещений)");
+                " (" + steps.size() + " этапов, включая транспортировку)");
 
         return totalTime;
     }
@@ -434,38 +431,17 @@ public class ApsAlgorithmService {
 
         if (line == null) return currentSequence;
 
-        for (int i = 0; i < line.getEquipmentIds().size(); i++) {
-            String eqId = line.getEquipmentIds().get(i);
+        // В новой версии маршрут явно прописан в line.getEquipmentIds()
+        for (BatchInfo.ProcessingStep step : batch.getSteps()) {
+            String desc = step.getEquipmentId().contains("BATH") || step.getEquipmentId().contains("DRYER") 
+                    ? "Обработка: " + batch.getMaterial() 
+                    : "Транспортировка / Захват";
 
-            // Перемещение краном (кроме первого шага)
-            if (i > 0) {
-                ComplexParameters.Equipment crane = complexParams.getEquipment().stream()
-                        .filter(e -> e.getId().equals("CRANE")).findFirst().orElse(null);
-                if (crane != null) {
-                    currentSequence.getActions().add(new ActionSequence.Action(
-                            stepNum++, "CRANE", "Мостовой кран",
-                            "Перемещение к " + eqId,
-                            currentTimeSec, crane.getProcessingTimeSec(), "PLANNED"));
-                    currentTimeSec += crane.getProcessingTimeSec();
-                }
-            }
-
-            // Обработка на устройстве
-            BatchInfo.ProcessingStep step = batch.getSteps().stream()
-                    .filter(s -> s.getEquipmentId().equals(eqId))
-                    .findFirst().orElse(null);
-
-            if (step != null) {
-                ComplexParameters.Equipment eq = complexParams.getEquipment().stream()
-                        .filter(e -> e.getId().equals(eqId)).findFirst().orElse(null);
-                String eqName = eq != null ? eq.getName() : eqId;
-
-                currentSequence.getActions().add(new ActionSequence.Action(
-                        stepNum++, eqId, eqName,
-                        "Обработка: " + batch.getMaterial(),
-                        currentTimeSec, step.getDurationSec(), "PLANNED"));
-                currentTimeSec += step.getDurationSec();
-            }
+            currentSequence.getActions().add(new ActionSequence.Action(
+                    stepNum++, step.getEquipmentId(), step.getOperation(), // В getOperation() хранится eq.getName()
+                    desc,
+                    currentTimeSec, step.getDurationSec(), "PLANNED"));
+            currentTimeSec += step.getDurationSec();
         }
 
         currentSequence.recalculateTotals();

@@ -62,21 +62,32 @@ public class ComplexParameters {
     public static ComplexParameters createDefault() {
         ComplexParameters params = new ComplexParameters();
 
+        // Транспортная система
         params.getEquipment().add(new Equipment(
-                "BATH_DEGREASE", "01 Обезжиривание", 100.0, 0.0, 600, true));
-        params.getEquipment().add(new Equipment(
-                "BATH_ETCH", "02 Травление", 80.0, 0.0, 900, true));
-        params.getEquipment().add(new Equipment(
-                "BATH_ZINC", "03 Ванна цинка", 120.0, 0.0, 1200, true));
-        params.getEquipment().add(new Equipment(
-                "DRYER", "04 Сушильная камера", 150.0, 0.0, 1800, true));
-        params.getEquipment().add(new Equipment(
-                "CRANE", "Мостовой кран", 50.0, 0.0, 120, true));
+                "CONVEYOR_MAIN", "Главный конвейер", 500.0, 0.0, 60, true));
+
+        // Роботы-манипуляторы
+        params.getEquipment().add(new Equipment("ROBOT_1", "Робот 1 (Загрузка/Обезжиривание)", 50.0, 0.0, 30, true));
+        params.getEquipment().add(new Equipment("ROBOT_2", "Робот 2 (Травление)", 50.0, 0.0, 30, true));
+        params.getEquipment().add(new Equipment("ROBOT_3", "Робот 3 (Цинкование)", 50.0, 0.0, 30, true));
+        params.getEquipment().add(new Equipment("ROBOT_4", "Робот 4 (Сушка/Выгрузка)", 50.0, 0.0, 30, true));
+
+        // Ванны (расширено)
+        params.getEquipment().add(new Equipment("BATH_DEGREASE_1", "01 Обезжиривание A", 100.0, 0.0, 600, true));
+        params.getEquipment().add(new Equipment("BATH_DEGREASE_2", "01 Обезжиривание B", 100.0, 0.0, 600, true));
+        params.getEquipment().add(new Equipment("BATH_ETCH_1", "02 Травление A", 80.0, 0.0, 900, true));
+        params.getEquipment().add(new Equipment("BATH_ETCH_2", "02 Травление B", 80.0, 0.0, 900, true));
+        params.getEquipment().add(new Equipment("BATH_ZINC_1", "03 Ванна цинка A", 120.0, 0.0, 1200, true));
+        params.getEquipment().add(new Equipment("BATH_ZINC_2", "03 Ванна цинка B", 120.0, 0.0, 1200, true));
+        params.getEquipment().add(new Equipment("DRYER", "04 Сушильная камера", 150.0, 0.0, 1800, true));
 
         List<String> galvanicLine = List.of(
-                "BATH_DEGREASE", "BATH_ETCH", "BATH_ZINC", "DRYER");
+                "ROBOT_1", "BATH_DEGREASE_1", "CONVEYOR_MAIN", 
+                "ROBOT_2", "BATH_ETCH_1", "CONVEYOR_MAIN", 
+                "ROBOT_3", "BATH_ZINC_1", "CONVEYOR_MAIN", 
+                "ROBOT_4", "DRYER");
         params.getLines().add(new ProductionLine(
-                "LINE_GALVANIC_1", "Гальваническая линия №1", galvanicLine, true));
+                "LINE_GALVANIC_1", "Гальваническая линия №1 (Роботизированная)", galvanicLine, true));
 
         return params;
     }
