@@ -34,6 +34,13 @@ public class FactoryNamespace extends ManagedNamespaceWithLifecycle {
     private UaVariableNode manualOverrideNode;
     private UaVariableNode systemStatusNode;
     private UaVariableNode currentStepNode;
+    
+    // New nodes for R-PRO integration
+    private UaVariableNode conveyorRunNode;
+    private UaVariableNode robot1CommandNode;
+    private UaVariableNode robot2CommandNode;
+    private UaVariableNode robot3CommandNode;
+    private UaVariableNode robot4CommandNode;
 
     // Track client activity (set when any node is read/written by a remote client)
     private volatile long lastClientAccessMs = 0;
@@ -91,8 +98,20 @@ public class FactoryNamespace extends ManagedNamespaceWithLifecycle {
         currentStepNode    = createVariable(folderId, "CurrentAlgorithmStep",
                 Identifiers.String,  new Variant("Ожидание подключения клиента..."), rwAccess);
 
+        // R-PRO specific nodes
+        conveyorRunNode    = createVariable(folderId, "Conveyor_Run",
+                Identifiers.Boolean, new Variant(false), rwAccess);
+        robot1CommandNode  = createVariable(folderId, "Robot1_Command",
+                Identifiers.String,  new Variant("IDLE"), rwAccess);
+        robot2CommandNode  = createVariable(folderId, "Robot2_Command",
+                Identifiers.String,  new Variant("IDLE"), rwAccess);
+        robot3CommandNode  = createVariable(folderId, "Robot3_Command",
+                Identifiers.String,  new Variant("IDLE"), rwAccess);
+        robot4CommandNode  = createVariable(folderId, "Robot4_Command",
+                Identifiers.String,  new Variant("IDLE"), rwAccess);
+
         System.out.println("[OPC-UA] Namespace '" + NAMESPACE_URI +
-                "' зарегистрирован: 4 переменных в узле 8_Global_Scheduler");
+                "' зарегистрирован: переменные в узле 8_Global_Scheduler (созданы теги R-PRO)");
     }
 
     // ==========================================================================
