@@ -27,6 +27,9 @@ java-server/mvnw*
 *.ear
 *.nar
 
+# Allow release artifacts
+!Release/**
+
 # Python (if any)
 __pycache__/
 *.pyc
