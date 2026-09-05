@@ -143,8 +143,12 @@ public class ApsAlgorithmService {
             // Итоговый приоритет
             batch.setPriority(urgency + materialScore + batch.getWeightScore());
 
-            // Назначаем линию (в нашей симуляции — единственная линия)
-            batch.setAssignedLineId("LINE_GALVANIC_1");
+            // Назначаем линию в зависимости от материала
+            if ("Медь".equals(batch.getMaterial())) {
+                batch.setAssignedLineId("LINE_COPPER");
+            } else {
+                batch.setAssignedLineId("LINE_ETCH");
+            }
             batch.setStatus("PRIORITIZED");
         }
 

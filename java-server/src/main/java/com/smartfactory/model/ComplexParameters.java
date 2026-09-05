@@ -77,17 +77,21 @@ public class ComplexParameters {
         params.getEquipment().add(new Equipment("BATH_DEGREASE_2", "01 Обезжиривание B", 100.0, 0.0, 600, true));
         params.getEquipment().add(new Equipment("BATH_ETCH_1", "02 Травление A", 80.0, 0.0, 900, true));
         params.getEquipment().add(new Equipment("BATH_ETCH_2", "02 Травление B", 80.0, 0.0, 900, true));
-        params.getEquipment().add(new Equipment("BATH_ZINC_1", "03 Ванна цинка A", 120.0, 0.0, 1200, true));
-        params.getEquipment().add(new Equipment("BATH_ZINC_2", "03 Ванна цинка B", 120.0, 0.0, 1200, true));
+        params.getEquipment().add(new Equipment("BATH_COPPER_1", "03 Меднение A", 120.0, 0.0, 1200, true));
+        params.getEquipment().add(new Equipment("BATH_COPPER_2", "03 Меднение B", 120.0, 0.0, 1200, true));
         params.getEquipment().add(new Equipment("DRYER", "04 Сушильная камера", 150.0, 0.0, 1800, true));
 
-        List<String> galvanicLine = List.of(
+        List<String> etchLine = List.of(
                 "ROBOT_1", "BATH_DEGREASE_1", "CONVEYOR_MAIN", 
-                "ROBOT_2", "BATH_ETCH_1", "CONVEYOR_MAIN", 
-                "ROBOT_3", "BATH_ZINC_1", "CONVEYOR_MAIN", 
+                "ROBOT_2", "BATH_ETCH_1");
+        params.getLines().add(new ProductionLine(
+                "LINE_ETCH", "Линия: Травление", etchLine, true));
+
+        List<String> copperLine = List.of(
+                "ROBOT_3", "BATH_COPPER_1", "CONVEYOR_MAIN", 
                 "ROBOT_4", "DRYER");
         params.getLines().add(new ProductionLine(
-                "LINE_GALVANIC_1", "Гальваническая линия №1 (Роботизированная)", galvanicLine, true));
+                "LINE_COPPER", "Линия: Меднение", copperLine, true));
 
         return params;
     }
