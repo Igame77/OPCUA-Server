@@ -1,0 +1,77 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{geometry}
+\geometry{a4paper, left=25mm, right=15mm, top=20mm, bottom=20mm}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{lightgray}{rgb}{0.95, 0.95, 0.95}
+\lstset{
+    backgroundcolor=\color{lightgray},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numbersep=5pt,
+}
+
+\title{Инструкция по подключению R-PRO (OPC UA Клиент) к удаленному OPC UA Серверу}
+\author{Antigravity MES System}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Введение}
+В данном документе описывается процесс подключения среды имитационного моделирования R-PRO (выступающей в роли OPC UA Клиента) к нашему Java Spring Boot серверу (выступающему в роли OPC UA Сервера), когда они находятся на \textbf{разных физических компьютерах}.
+
+Так как в конфигурации сервера (\texttt{OpcUaServerManager.java}) мы уже прописали прослушивание всех сетевых интерфейсов (\texttt{setBindAddress("0.0.0.0")}), сервер по умолчанию готов принимать внешние подключения.
+
+\section{Шаг 1. Узнать IP-адрес компьютера с сервером}
+На компьютере, где запущен Java OPC UA сервер, необходимо узнать его локальный IPv4 адрес.
+\begin{enumerate}
+    \item Откройте командную строку (\texttt{cmd}) или PowerShell.
+    \item Введите команду:
+    \begin{lstlisting}[language=bash]
+    ipconfig
+    \end{lstlisting}
+    \item Найдите строку \texttt{IPv4 Address} (например, \texttt{192.168.1.50}). Запишите этот адрес.
+\end{enumerate}
+
+\section{Шаг 2. Настройка Брандмауэра Windows (Firewall)}
+Чтобы сторонний компьютер мог подключиться к нашему серверу, необходимо открыть порт \texttt{4840} для входящих соединений на компьютере-сервере.
+\begin{enumerate}
+    \item Откройте \textbf{Брандмауэр Защитника Windows} (Windows Defender Firewall).
+    \item Перейдите в \textbf{Дополнительные параметры} (Advanced settings).
+    \item Выберите \textbf{Правила для входящих подключений} (Inbound Rules) и нажмите \textbf{Создать правило...} (New Rule).
+    \item Выберите тип \textbf{Для порта} (Port) $\rightarrow$ Далее.
+    \item Выберите \textbf{TCP} и укажите определенный локальный порт: \texttt{4840} $\rightarrow$ Далее.
+    \item Выберите \textbf{Разрешить подключение} (Allow the connection) $\rightarrow$ Далее.
+    \item Укажите профили (Доменный, Частный, Публичный) $\rightarrow$ Далее.
+    \item Назовите правило, например, \texttt{OPC UA Server Port 4840}, и нажмите Готово.
+\end{enumerate}
+
+\section{Шаг 3. Подключение со стороны R-PRO}
+Теперь необходимо настроить среду R-PRO на клиентском компьютере.
+\begin{enumerate}
+    \item Убедитесь, что оба компьютера находятся в одной локальной сети (подключены к одному Wi-Fi роутеру или соединены через VPN, например Radmin VPN / Hamachi).
+    \item Откройте R-PRO на клиентском компьютере и перейдите в настройки \textbf{OPC UA} (раздел внешних подключений).
+    \item В поле \textbf{Endpoint URL} (или Адрес сервера) введите:
+    \begin{lstlisting}
+    opc.tcp://[IP-адрес-сервера]:4840/
+    \end{lstlisting}
+    \textit{Пример: \texttt{opc.tcp://192.168.1.50:4840/}}
+    \item Нажмите \textbf{Connect} (Подключиться). Индикатор должен загореться зеленым цветом.
+    \item После успешного подключения вы сможете просматривать дерево тегов (Nodes) нашего сервера и привязывать переменные (например, \texttt{Robot1\_Command}) к 3D-моделям в сцене.
+\end{enumerate}
+
+\section{Решение возможных проблем}
+\begin{itemize}
+    \item \textbf{Связь прерывается или не устанавливается:} Попробуйте временно полностью отключить Брандмауэр на сервере. Если это помогло, значит порт \texttt{4840} был открыт неверно.
+    \item \textbf{Компьютеры не видят друг друга:} Запустите команду \texttt{ping [IP-адрес-сервера]} на клиентском компьютере. Если ответа нет, проверьте сетевые настройки (например, видимость ПК в локальной сети Windows).
+\end{itemize}
+
+\end{document}
