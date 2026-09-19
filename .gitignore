@@ -30,6 +30,7 @@ java-server/mvnw*
 # Allow release artifacts
 !Release/**
 SmartFactory_Release.zip
+java-server/schedule.json
 
 # Python (if any)
 __pycache__/

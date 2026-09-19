@@ -62,8 +62,8 @@ public class OpcUaServerManager {
 
             if (isActive) {
                 factoryNamespace.readClientValuesToApiState(apiState);
-                factoryNamespace.writeServerValuesToOpc(apiState);
             }
+            factoryNamespace.writeServerValuesToOpc(apiState);
         }
     }
 

@@ -52,6 +52,13 @@ public class SimulationService {
         apiState.setHumidity(humVal);
         apiState.setDoorClosed(currentDoorState);
 
+        // Синхронизация с узлом 6 (Сушильная камера)
+        apiState.getStage6().setTemperatureCelsius(tempVal);
+        apiState.getStage6().setHumidityPercent(humVal);
+        apiState.getStage6().setActive(humVal > 30);
+        apiState.getStage6().setFanOn(humVal > 40);
+        apiState.getStage6().setSensorConnected(true);
+
         if (previousDoorState && !currentDoorState) {
             apiState.setManualMode(true);
             apiState.setStatus("MANUAL_INTERVENTION");
@@ -60,8 +67,50 @@ public class SimulationService {
             apiState.setStatus("AUTO_NORMAL");
         }
         previousDoorState = currentDoorState;
+    }
 
-        // In a real application, you would also update the Eclipse Milo OPC UA Nodes here.
+    // =========================================================================
+    // galvanicStagesSimulationLoop — Симуляция технологических узлов 1-5 и 7
+    // =========================================================================
+    @Scheduled(fixedRate = 2000)
+    public void galvanicStagesSimulationLoop() {
+        if (!apiState.isSimRunning()) {
+            return;
+        }
+
+        // Узел 1: Обезжиривание
+        int t1 = 45 + random.nextInt(11); // 45..55
+        apiState.getStage1().setTemperature(t1);
+        apiState.getStage1().setHeaterOn(t1 < 50);
+        apiState.getStage1().setActive(random.nextBoolean());
+
+        // Узел 2: Промывка 1
+        boolean pump2 = random.nextBoolean();
+        apiState.getStage2().setPumpRunning(pump2);
+        apiState.getStage2().setActive(pump2);
+
+        // Узел 3: Травление
+        int t3 = 20 + random.nextInt(11); // 20..30
+        apiState.getStage3().setTemperature(t3);
+        apiState.getStage3().setAgitatorOn(random.nextBoolean());
+        apiState.getStage3().setActive(random.nextBoolean());
+
+        // Узел 4: Промывка 2
+        boolean pump4 = random.nextBoolean();
+        apiState.getStage4().setPumpRunning(pump4);
+        apiState.getStage4().setActive(pump4);
+
+        // Узел 5: Флюс
+        int t5 = 55 + random.nextInt(11); // 55..65
+        apiState.getStage5().setTemperature(t5);
+        apiState.getStage5().setHeaterOn(t5 < 60);
+        apiState.getStage5().setActive(random.nextBoolean());
+
+        // Узел 7: Цинк
+        int t7 = 440 + random.nextInt(21); // 440..460
+        apiState.getStage7().setTemperature(t7);
+        apiState.getStage7().setHeaterOn(t7 < 448);
+        apiState.getStage7().setActive(true);
     }
 
     // =========================================================================

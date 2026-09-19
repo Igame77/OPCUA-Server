@@ -104,6 +104,17 @@ export default function App() {
   // Equipment
   const [equipment, setEquipment] = useState<EquipmentInfo[]>([]);
 
+  // 7 Stages Galvanic Line telemetry
+  const [factoryStages, setFactoryStages] = useState<any>({
+    stage_1_alkaline_degreasing: { temperature: 50, is_active: false, heater_on: false },
+    stage_2_rinsing_1: { is_active: false, pump_running: false },
+    stage_3_pickling: { temperature: 25, is_active: false, agitator_on: false },
+    stage_4_rinsing_2: { is_active: false, pump_running: false },
+    stage_5_fluxing: { temperature: 60, is_active: false, heater_on: false },
+    stage_6_drying_chamber: { temperature_celsius: 55, humidity_percent: 20, is_active: false, fan_on: false, sensor_connected: true },
+    stage_7_zinc_bath: { temperature: 450, is_active: true, heater_on: false }
+  });
+
   const [logs, setLogs] = useState([
     { id: 1, time: '14:28:30', src: 'OPC_SERVER', msg: "Переменная 'SimulationRunning' установлена в TRUE", color: 'text-slate-300' },
     { id: 2, time: '14:28:31', src: 'REST_API', msg: "GET /api/queue запрос от 192.168.1.15 (Android)", color: 'text-slate-300' },
@@ -216,6 +227,16 @@ export default function App() {
                 setCurrentTasks(qData.current_tasks || []);
             }
         }
+
+        try {
+            const fsRes = await fetch('http://localhost:8080/api/factory-status');
+            if (fsRes.ok) {
+                const fsData = await fsRes.json();
+                if (fsData.data && !cancelled) {
+                    setFactoryStages(fsData.data);
+                }
+            }
+        } catch (_) {}
       } catch (err) {
         console.error('Failed to fetch from backend', err);
         setSimRunning(false);
@@ -425,31 +446,74 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Bath 1 */}
-                <div className="flex flex-col items-center w-1/4">
-                  <div className={`w-full max-w-[6rem] h-10 lg:h-12 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0 ${apsPhase === 'CALC_ACTION_SEQ' || apsPhase === 'FILL_SCHEDULE' ? 'border-sky-400/50' : ''}`}>
+                {/* Station 1 */}
+                <div className="flex flex-col items-center flex-1 min-w-0">
+                  <div className={`w-full max-w-[4.8rem] h-9 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0`}>
                     <div className={`absolute inset-0 bg-lime-500/30 ${simRunning && !manualMode ? 'animate-pulse' : ''}`}></div>
-                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-lime-500/60"></div>
+                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-lime-500/70"></div>
                   </div>
-                  <span className="mt-2 text-[8px] md:text-[9px] text-center font-bold text-slate-500 uppercase">01 Обезжирив.</span>
+                  <span className="mt-1 text-[8px] text-center font-bold text-slate-400 uppercase truncate">01 Обезжир.</span>
+                  <span className="text-[8px] font-mono text-lime-400">{factoryStages.stage_1_alkaline_degreasing?.temperature || 50}°C</span>
                 </div>
 
-                {/* Bath 2 */}
-                <div className="flex flex-col items-center w-1/4">
-                  <div className={`w-full max-w-[6rem] h-10 lg:h-12 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0 ${apsPhase === 'CALC_ACTION_SEQ' || apsPhase === 'FILL_SCHEDULE' ? 'border-sky-400/50' : ''}`}>
+                {/* Station 2 */}
+                <div className="flex flex-col items-center flex-1 min-w-0">
+                  <div className={`w-full max-w-[4.8rem] h-9 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0`}>
+                    <div className="absolute inset-0 bg-sky-500/30"></div>
+                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-sky-500/70"></div>
+                  </div>
+                  <span className="mt-1 text-[8px] text-center font-bold text-slate-400 uppercase truncate">02 Промывка-1</span>
+                  <span className="text-[8px] font-mono text-sky-400">{factoryStages.stage_2_rinsing_1?.pump_running ? 'Помпа ВКЛ' : 'Ожид.'}</span>
+                </div>
+
+                {/* Station 3 */}
+                <div className="flex flex-col items-center flex-1 min-w-0">
+                  <div className={`w-full max-w-[4.8rem] h-9 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0`}>
                     <div className="absolute inset-0 bg-cyan-500/30"></div>
-                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-cyan-500/60"></div>
+                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-cyan-500/70"></div>
                   </div>
-                  <span className="mt-2 text-[8px] md:text-[9px] text-center font-bold text-slate-500 uppercase">02 Травление</span>
+                  <span className="mt-1 text-[8px] text-center font-bold text-slate-400 uppercase truncate">03 Травление</span>
+                  <span className="text-[8px] font-mono text-cyan-400">{factoryStages.stage_3_pickling?.temperature || 25}°C</span>
                 </div>
 
-                {/* Bath 3 */}
-                <div className="flex flex-col items-center w-1/4">
-                  <div className={`w-full max-w-[6rem] h-10 lg:h-12 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0 ${apsPhase === 'CALC_ACTION_SEQ' || apsPhase === 'FILL_SCHEDULE' ? 'border-sky-400/50' : ''}`}>
-                    <div className="absolute inset-0 bg-orange-500/20"></div>
-                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-orange-500/60 shadow-[0_-5px_15px_rgba(249,115,22,0.3)]"></div>
+                {/* Station 4 */}
+                <div className="flex flex-col items-center flex-1 min-w-0">
+                  <div className={`w-full max-w-[4.8rem] h-9 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0`}>
+                    <div className="absolute inset-0 bg-sky-500/30"></div>
+                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-sky-500/70"></div>
                   </div>
-                  <span className="mt-2 text-[8px] md:text-[9px] text-center font-bold text-slate-500 uppercase">03 Ванна цинка</span>
+                  <span className="mt-1 text-[8px] text-center font-bold text-slate-400 uppercase truncate">04 Промывка-2</span>
+                  <span className="text-[8px] font-mono text-sky-400">{factoryStages.stage_4_rinsing_2?.pump_running ? 'Помпа ВКЛ' : 'Ожид.'}</span>
+                </div>
+
+                {/* Station 5 */}
+                <div className="flex flex-col items-center flex-1 min-w-0">
+                  <div className={`w-full max-w-[4.8rem] h-9 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0`}>
+                    <div className="absolute inset-0 bg-amber-500/30"></div>
+                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-amber-500/70"></div>
+                  </div>
+                  <span className="mt-1 text-[8px] text-center font-bold text-slate-400 uppercase truncate">05 Флюс</span>
+                  <span className="text-[8px] font-mono text-amber-400">{factoryStages.stage_5_fluxing?.temperature || 60}°C</span>
+                </div>
+
+                {/* Station 6 */}
+                <div className="flex flex-col items-center flex-1 min-w-0">
+                  <div className={`w-full max-w-[4.8rem] h-9 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0`}>
+                    <div className="absolute inset-0 bg-purple-500/30"></div>
+                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-purple-500/70"></div>
+                  </div>
+                  <span className="mt-1 text-[8px] text-center font-bold text-slate-400 uppercase truncate">06 Сушка</span>
+                  <span className="text-[8px] font-mono text-purple-400">{factoryStages.stage_6_drying_chamber?.temperature_celsius || temperature.toFixed(0)}°C</span>
+                </div>
+
+                {/* Station 7 */}
+                <div className="flex flex-col items-center flex-1 min-w-0">
+                  <div className={`w-full max-w-[4.8rem] h-9 bg-slate-800 border-2 border-slate-700 relative rounded-b-lg overflow-hidden z-0`}>
+                    <div className="absolute inset-0 bg-orange-500/30"></div>
+                    <div className="absolute bottom-0 inset-x-0 h-1.5 bg-orange-500/70 shadow-[0_-5px_15px_rgba(249,115,22,0.4)]"></div>
+                  </div>
+                  <span className="mt-1 text-[8px] text-center font-bold text-slate-400 uppercase truncate">07 Ванна Zn</span>
+                  <span className="text-[8px] font-mono text-orange-400">{factoryStages.stage_7_zinc_bath?.temperature || 450}°C</span>
                 </div>
               </div>
             </div>

@@ -38,6 +38,48 @@ public class FactoryController {
         return apiState;
     }
 
+    @GetMapping("/factory-status")
+    public Map<String, Object> getFactoryStatus() {
+        return Map.of(
+                "status", "ok",
+                "data", apiState.getFactoryStateMap()
+        );
+    }
+
+    @PostMapping("/factory-status")
+    public Map<String, Object> updateFactoryStatus(@RequestBody Map<String, Object> payload) {
+        if (payload != null && payload.containsKey("data")) {
+            Object dataObj = payload.get("data");
+            if (dataObj instanceof Map<?, ?> dataMap) {
+                if (dataMap.containsKey("stage_6_drying_chamber")) {
+                    Object s6 = dataMap.get("stage_6_drying_chamber");
+                    if (s6 instanceof Map<?, ?> m6) {
+                        if (m6.containsKey("temperature_celsius") && m6.get("temperature_celsius") instanceof Number n) {
+                            apiState.getStage6().setTemperatureCelsius(n.intValue());
+                            apiState.setTemperature(n.intValue());
+                        }
+                        if (m6.containsKey("humidity_percent") && m6.get("humidity_percent") instanceof Number n) {
+                            apiState.getStage6().setHumidityPercent(n.intValue());
+                            apiState.setHumidity(n.intValue());
+                        }
+                        if (m6.containsKey("sensor_connected")) {
+                            apiState.getStage6().setSensorConnected(Boolean.TRUE.equals(m6.get("sensor_connected")));
+                        }
+                    }
+                }
+            }
+        }
+        return Map.of("status", "ok");
+    }
+
+    @GetMapping("/health")
+    public Map<String, Object> getHealth() {
+        return Map.of(
+                "status", "ok",
+                "uart_connected", apiState.getStage6().isSensorConnected()
+        );
+    }
+
     @GetMapping("/queue")
     public ScheduleService.ScheduleData getQueue() {
         return scheduleService.readSchedule();
