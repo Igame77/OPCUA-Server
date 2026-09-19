@@ -45,8 +45,12 @@ venv/
 .vscode/
 .DS_Store
 
-# LaTeX Docs
-docs/latex/
+# LaTeX build artifacts
+docs/latex/*.aux
+docs/latex/*.log
+docs/latex/*.out
+docs/latex/*.toc
+docs/latex/*.synctex*
 
 # Antigravity IDE (Confidential)
 .antigravity/

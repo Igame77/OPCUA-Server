@@ -1,0 +1,468 @@
+\documentclass[14pt, a4paper]{extarticle} 
+
+% Поддержка русского языка и кодировок
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+% Настройка полей (ГОСТ)
+\usepackage[left=3cm, right=1.5cm, top=2cm, bottom=2cm]{geometry}
+
+% Графика и рисование схем
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning, fit, calc, shadows}
+
+% Таблицы и списки
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{enumitem}
+\setlist{nosep} 
+
+% Ссылки и метаданные
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    citecolor=black,
+    pdftitle={Документация: Цифровой двойник и алгоритм APS},
+}
+
+% Математика
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% Настройка для вставки исходного кода (Java/Python/C#)
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.96,0.96}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen}\itshape,
+    keywordstyle=\color{blue}\bfseries,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=8pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{black!30}
+}
+
+% Патч для русского языка и спецсимволов в листингах
+\lstset{
+    style=mystyle,
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={а}{{\cyra}}1 {б}{{\cyrb}}1 {в}{{\cyrv}}1 {г}{{\cyrg}}1 {д}{{\cyrd}}1 
+             {е}{{\cyre}}1 {ё}{{\cyryo}}1 {ж}{{\cyrzh}}1 {з}{{\cyrz}}1 {и}{{\cyri}}1 
+             {й}{{\cyrishrt}}1 {к}{{\cyrk}}1 {л}{{\cyrl}}1 {м}{{\cyrm}}1 {н}{{\cyrn}}1 
+             {о}{{\cyro}}1 {п}{{\cyrp}}1 {р}{{\cyrr}}1 {с}{{\cyrs}}1 {т}{{\cyrt}}1 
+             {у}{{\cyru}}1 {ф}{{\cyrf}}1 {х}{{\cyrh}}1 {ц}{{\cyrc}}1 {ч}{{\cyrch}}1 
+             {ш}{{\cyrsh}}1 {щ}{{\cyrshch}}1 {ъ}{{\cyrhrdsn}}1 {ы}{{\cyrery}}1 
+             {ь}{{\cyrsftsn}}1 {э}{{\cyrerev}}1 {ю}{{\cyryu}}1 {я}{{\cyrya}}1
+             {А}{{\CYRA}}1 {Б}{{\CYRB}}1 {В}{{\CYRV}}1 {Г}{{\CYRG}}1 {Д}{{\CYRD}}1 
+             {Е}{{\CYRE}}1 {Ё}{{\CYRYO}}1 {Ж}{{\CYRZH}}1 {З}{{\CYRZ}}1 {И}{{\CYRI}}1 
+             {Й}{{\CYRISHRT}}1 {К}{{\CYRK}}1 {Л}{{\CYRL}}1 {М}{{\CYRM}}1 {Н}{{\CYRN}}1 
+             {О}{{\CYRO}}1 {П}{{\CYRP}}1 {Р}{{\CYRR}}1 {С}{{\CYRS}}1 {Т}{{\CYRT}}1 
+             {У}{{\CYRU}}1 {Ф}{{\CYRF}}1 {Х}{{\CYRH}}1 {Ц}{{\CYRC}}1 {Ч}{{\CYRCH}}1 
+             {Ш}{{\CYRSH}}1 {Щ}{{\CYRSHCH}}1 {Ъ}{{\CYRHRDSN}}1 {Ы}{{\CYRERY}}1 
+             {Ь}{{\CYRSFTSN}}1 {Э}{{\CYREREV}}1 {Ю}{{\CYRYU}}1 {Я}{{\CYRYA}}1
+             {°}{{$^\circ$}}1
+}
+
+% Оформление заголовков
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Интерлиньяж
+\usepackage{setspace}
+\onehalfspacing
+
+\begin{document}
+
+% ========================================================================
+% ТИТУЛЬНЫЙ ЛИСТ
+% ========================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\LARGE \bfseries Программно-аппаратный комплекс\\[0.5cm] «Цифровой двойник технологической линии горячего цинкования»\par}
+    \vspace{1.5cm}
+    {\Large \bfseries Техническая документация\par}
+    \vspace{1cm}
+    {\large Архитектура, математические модели алгоритма динамического планирования (APS), интеграция промышленного протокола OPC UA и разработка клиентских SCADA/HMI интерфейсов\par}
+    \vfill
+    {\large 2026 \par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ========================================================================
+\section{Введение}
+% ========================================================================
+
+Настоящая техническая документация описывает архитектуру, физико-химическую модель, математические алгоритмы и программную реализацию киберфизического комплекса управления технологической линией горячего цинкования металлоизделий. Проект разработан в рамках концепции Индустрии 4.0 и реализует парадигму Hardware-in-the-Loop (HIL) --- аппаратно-программного полунатурного моделирования.
+
+Ключевой задачей комплекса является интеграция многофакторного алгоритма динамического планирования производства (APS --- Advanced Planning and Scheduling) в единый распределённый программный контур. Система объединяет физические микроконтроллеры с датчиками, вычислительное серверное ядро на Java Spring Boot с промышленным сервером OPC UA, аппаратно-программный мост телеметрии на Python FastAPI, двухъярусный 2D-симулятор SCADA на PyGame, веб-дашборд оператора на React и мобильный Android-терминал.
+
+% ========================================================================
+\section{Архитектура программно-аппаратного комплекса}
+% ========================================================================
+
+Комплекс построен по сервис-ориентированной многоуровневой топологии, включающей четыре взаимосвязанных логических уровня: физический (Edge), шлюзовой (Bridge), серверный (Fog/Core) и клиентский (Client/HMI).
+
+\begin{figure}[h!]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tikzpicture}[node distance=1.2cm, auto]
+            % Стили
+            \tikzset{
+                hw/.style={rectangle, rounded corners, minimum width=3.2cm, minimum height=1.3cm, align=center, draw=black, fill=red!10},
+                bridge/.style={rectangle, rounded corners, minimum width=3.4cm, minimum height=1.3cm, align=center, draw=black, fill=orange!15},
+                server/.style={rectangle, rounded corners, minimum width=6.8cm, minimum height=4.2cm, align=center, draw=black, fill=blue!10},
+                client/.style={rectangle, rounded corners, minimum width=3.6cm, minimum height=1.1cm, align=center, draw=black, fill=green!10},
+                arrow/.style={thick,<->,>=stealth}
+            }
+            
+            % Узлы
+            \node (esp) [hw] {\textbf{Edge Level:}\\ESP32 (DHT11/22)};
+            \node (bridge) [bridge, right=of esp, xshift=0.6cm] {\textbf{Bridge Level:}\\FastAPI / PySerial\\COM20 @ 115200};
+            
+            \node (java) [server, right=of bridge, xshift=0.8cm] {};
+            \node[above] at (java.north) [yshift=-0.6cm] {\textbf{Fog Level:} Java Server Core (Spring Boot)};
+            
+            \node (pygame) [client, right=of java, xshift=1.0cm, yshift=1.5cm] {\textbf{SCADA:} PyGame 2D};
+            \node (react) [client, right=of java, xshift=1.0cm, yshift=0.0cm] {\textbf{HMI:} React Dashboard};
+            \node (android) [client, right=of java, xshift=1.0cm, yshift=-1.5cm] {\textbf{MES:} Android Terminal};
+
+            % Внутренности сервера
+            \node (sched) [rectangle, fill=white, draw=black, minimum width=5.6cm, align=center, yshift=1.0cm] at (java.center) {APS Algorithm Engine \& Scheduler};
+            \node (opc) [rectangle, fill=white, draw=black, minimum width=5.6cm, align=center, yshift=0.0cm] at (java.center) {OPC UA Server (Eclipse Milo:4840)};
+            \node (api) [rectangle, fill=white, draw=black, minimum width=5.6cm, align=center, yshift=-1.0cm] at (java.center) {REST API (Spring Web:8080)};
+
+            % Связи
+            \draw [thick,->,>=stealth] (esp) -- node[above] {UART} (bridge);
+            \draw [thick,->,>=stealth] (bridge) -- node[above] {HTTP POST} (java);
+            \draw [arrow] (opc.east) -- node[above] {TCP:4840} (pygame.west);
+            \draw [arrow] (api.east) -- node[above] {HTTP:8080} (react.west);
+            \draw [arrow] (api.east) -- node[below] {HTTP:8080} (android.west);
+        \end{tikzpicture}
+    }
+    \caption{Структурная схема потоков данных и интерфейсов комплекса}
+\end{figure}
+
+\begin{enumerate}
+    \item \textbf{Аппаратный уровень (Edge):} Физический микроконтроллер ESP32 производит периодический опрос аналогово-цифровых датчиков климатических параметров сушильной камеры и транслирует данные по интерфейсу UART.
+    \item \textbf{Шлюзовой уровень (Bridge):} Модуль \texttt{hardware\_bridge.py} осуществляет непрерывное чтение COM-порта (115200 бод), первичную фильтрацию пакетов, программную симуляцию смежных агрегатов и фоновую ретрансляцию JSON-пакетов в Java-сервер.
+    \item \textbf{Серверный уровень (Fog):} Высокопроизводительное ядро Spring Boot, управляющее планировщиком задач, хранилищем \texttt{schedule.json}, расчётом алгоритма APS и сервером OPC UA.
+    \item \textbf{Уровень человеко-машинного интерфейса (Client):} Включает 2D-симулятор конвейера на PyGame, веб-панель инженера на React и мобильный Android-терминал.
+\end{enumerate}
+
+% ========================================================================
+\newpage
+\section{Технологическая линия горячего цинкования (7 стадий)}
+% ========================================================================
+
+Процесс горячего цинкования представляет собой последовательность взаимосвязанных физико-химических и термических операций, направленных на подготовку поверхности стали и формирование прочного железо-цинкового сплава ($\mathrm{Fe-Zn}$). В соответствии с промышленными регламентами (ГОСТ 9.307-2021) в цифровом двойнике смоделированы 7 технологических стадий:
+
+\begin{enumerate}
+    \item \textbf{Стадия 1: Щелочное обезжиривание (\texttt{1\_Alkaline\_Degreasing}).} Очистка металлоизделий от консервационных масел, смазок и технологических загрязнений в растворе едкого натра ($\mathrm{NaOH}$) и тринатрийфосфата при температуре $50..60^\circ\text{C}$. Поддержание температуры осуществляется автоматическим включением электронагревателей (ТЭН).
+    \item \textbf{Стадия 2: Промывка №1 (\texttt{2\_Rinsing\_1}).} Каскадная промывка технической водой для предотвращения уноса щелочного раствора в ванну травления. Включает циркуляционный насос принудительного перемешивания.
+    \item \textbf{Стадия 3: Кислотное травление (\texttt{3\_Pickling}).} Удаление прокатной окалины и продуктов коррозии (ржавчины) в растворе ингибированной соляной кислоты ($\mathrm{HCl}$, $120..180\text{ г/л}$) при температуре $20..30^\circ\text{C}$. Стадия оснащена барботажным/механическим перемешивателем для интенсификации процесса.
+    \item \textbf{Стадия 4: Промывка №2 (\texttt{4\_Rinsing\_2}).} Финишная отмывка от остатков кислоты и солей хлорида железа ($\mathrm{FeCl}_2$) с контролем работы промывочного насоса.
+    \item \textbf{Стадия 5: Флюсование (\texttt{5\_Fluxing}).} Пассивация и активация поверхности перед контактом с расплавом в водном растворе солей хлорида цинка и аммония ($\mathrm{ZnCl}_2 \cdot 2\mathrm{NH}_4\mathrm{Cl}$) при температуре $55..65^\circ\text{C}$ с ТЭН-подогревом. Плёнка флюса предотвращает повторное окисление стали при сушке.
+    \item \textbf{Стадия 6: Сушильная камера (\texttt{6\_Drying\_Chamber}).} Конвекционный нагрев изделий горячим воздухом ($50..65^\circ\text{C}$) для полного испарения влаги (предотвращение взрывного вскипания воды при погружении в жидкий цинк). Оснащена вентилятором обдува и подключена к физическому датчику DHT11/22 через UART.
+    \item \textbf{Стадия 7: Ванна горячего цинкования (\texttt{7\_Zinc\_Bath}).} Погружение стальных изделий в расплавленный цинк чистоты 99.995\% при температуре $440..460^\circ\text{C}$. В результате диффузии образуются интерметаллидные фазы гамма, дельта и дзета, обеспечивающие катодную антикоррозионную защиту металла на срок до 50 лет.
+\end{enumerate}
+
+\begin{table}[h!]
+\centering
+\caption{Параметры технологических стадий линии горячего цинкования}
+\begin{tabularx}{\textwidth}{|l|l|X|l|}
+\hline
+\textbf{Стадия} & \textbf{Среда} & \textbf{Исполнительный орган} & \textbf{Температура} \\
+\hline
+1. Обезжиривание & Щелочь $\mathrm{NaOH}$ & ТЭН электронагрева & $50..60^\circ\text{C}$ \\
+2. Промывка №1 & Вода & Циркуляционный насос & $15..25^\circ\text{C}$ \\
+3. Травление & Кислота $\mathrm{HCl}$ & Перемешивающее устройство & $20..30^\circ\text{C}$ \\
+4. Промывка №2 & Вода & Циркуляционный насос & $15..25^\circ\text{C}$ \\
+5. Флюсование & Соли $\mathrm{ZnCl}_2$ & ТЭН электроподогрева & $55..65^\circ\text{C}$ \\
+6. Сушка & Воздух & Вентилятор обдува, ТЭН & $50..65^\circ\text{C}$ \\
+7. Цинкование & Расплав $\mathrm{Zn}$ & Высокотемпературный нагрев & $440..460^\circ\text{C}$ \\
+\hline
+\end{tabularx}
+\end{table}
+
+% ========================================================================
+\newpage
+\section{Математическая модель алгоритма APS}
+% ========================================================================
+
+Алгоритм APS решает задачу оптимального динамического диспетчирования партий изделий по многопозиционному агрегату с минимизацией общего времени переналадки и предотвращением технологических конфликтов на оборудовании.
+
+\subsection{Динамическая приоритизация партий}
+Каждая поступающая в очередь MES партия $b \in \mathcal{B}$ характеризуется вектором параметров: временем постановки $t_{wait}$, маркой сырья $m$ и массой $w$. Приоритет $P(b)$ формируется аддитивной сверткой:
+\begin{equation}
+P(b) = U(t_{wait}) + M(m) + W(w) + P_{manual}
+\end{equation}
+где:
+\begin{itemize}
+    \item $U(t_{wait}) = \min\left(50,\, \frac{t_{wait}}{10}\right)$ --- штрафная функция за задержку исполнения партии в очереди (баллы от 0 до 50);
+    \item $M(m)$ --- технологический вес материала: Медь $\to 30$, Алюминий $\to 20$, Сталь $\to 10$;
+    \item $W(w) = \min\left(20,\, \frac{w}{5}\right)$ --- весовой балл по массе садки (до 20 баллов);
+    \item $P_{manual} \in \{0, 999\}$ --- абсолютный приоритет при ручном вклинивании оператора.
+\end{itemize}
+
+\subsection{Оценка загруженности оборудования}
+Средний коэффициент загруженности производственного комплекса $U_{avg}$ рассчитывается как среднее арифметическое относительных загрузок единиц оборудования:
+\begin{equation}
+U_{avg} = \frac{1}{N} \sum_{i=1}^{N} \frac{L_i}{C_i}
+\end{equation}
+где $L_i$ --- текущая масса обрабатываемых деталей на $i$-м агрегате (кг), $C_i$ --- номинальная вместимость агрегата (кг). Если $U_{avg} \ge U_{crit} = 0{,}85$, алгоритм временно блокирует включение новых партий во избежание образования заторов на межоперационных накопителях.
+
+\subsection{Суперпозиция расписания и расчёт свободных окон}
+Расчётное время технологической обработки партии на $k$-й стадии определяется с учётом материального коэффициента $K_m$ и относительной массы заготовки:
+\begin{equation}
+T_{proc, k} = T_{base, k} \cdot K_m \cdot \left(0{,}8 + 0{,}4 \cdot \frac{w}{w_{max}}\right)
+\end{equation}
+Для утверждения расписания вычисляется пересечение свободного временного окна оборудования $[\tau_{start}, \tau_{end}]$ с требуемым интервалом обработки $T_{proc}$. При обнаружении временной коллизии алгоритм переходит в ветку анализа отказа: если число пересчётов $N_{recalc} < 3$, алгоритм производит повторную оптимизацию последовательности действий (коннектор $B$), иначе переводит систему в режим ручного вмешательства (коннектор $C$).
+
+% ========================================================================
+\newpage
+\section{Программная реализация ядра (Java / Spring Boot)}
+% ========================================================================
+
+\subsection{Потокобезопасная работа с расписанием (ScheduleService.java)}
+Файл \texttt{schedule.json} выступает энергонезависимой базой данных задач. Доступ к нему синхронизирован с использованием объекта блокировки \texttt{fileLock}:
+
+\begin{lstlisting}[language=Java, caption=Синхронизация доступа к файлу расписания]
+@Service
+public class ScheduleService {
+    private final ObjectMapper mapper = new ObjectMapper();
+    private final File scheduleFile = new File("schedule.json");
+    private final Object fileLock = new Object();
+
+    public ScheduleData readSchedule() {
+        synchronized (fileLock) {
+            if (!scheduleFile.exists()) return new ScheduleData();
+            try {
+                return mapper.readValue(scheduleFile, ScheduleData.class);
+            } catch (IOException e) {
+                return new ScheduleData();
+            }
+        }
+    }
+
+    public void writeSchedule(ScheduleData data) {
+        synchronized (fileLock) {
+            try {
+                mapper.writerWithDefaultPrettyPrinter().writeValue(scheduleFile, data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+\end{lstlisting}
+
+\subsection{Симуляция физических параметров стадий (SimulationService.java)}
+Фоновый процесс с частотой 0.5~Гц моделирует физические параметры технологических агрегатов:
+
+\begin{lstlisting}[language=Java, caption=Симуляция параметров 7 стадий в SimulationService.java]
+@Scheduled(fixedRate = 2000)
+public void galvanicStagesSimulationLoop() {
+    if (!apiState.isSimRunning()) return;
+
+    // Стадия 1: Обезжиривание (50-60 C)
+    int t1 = 45 + random.nextInt(11);
+    apiState.getStage1().setTemperature(t1);
+    apiState.getStage1().setHeaterOn(t1 < 50);
+    apiState.getStage1().setActive(random.nextBoolean());
+
+    // Стадия 2: Промывка 1 (насос)
+    boolean pump2 = random.nextBoolean();
+    apiState.getStage2().setPumpRunning(pump2);
+    apiState.getStage2().setActive(pump2);
+
+    // Стадия 3: Травление (мешалка)
+    int t3 = 20 + random.nextInt(11);
+    apiState.getStage3().setTemperature(t3);
+    apiState.getStage3().setAgitatorOn(random.nextBoolean());
+
+    // Стадия 7: Ванна расплава цинка (440-460 C)
+    int t7 = 440 + random.nextInt(21);
+    apiState.getStage7().setTemperature(t7);
+    apiState.getStage7().setHeaterOn(t7 < 448);
+    apiState.getStage7().setActive(true);
+}
+\end{lstlisting}
+
+\subsection{Организация адресного пространства OPC UA (FactoryNamespace.java)}
+Класс реализует спецификацию IEC 62541 на базе Eclipse Milo, создавая 8 иерархических папок узлов:
+
+\begin{lstlisting}[language=Java, caption=Регистрация узлов в FactoryNamespace.java]
+public void registerNodes() {
+    UByte rwAccess = UByte.valueOf(3); // Чтение и запись
+
+    UaFolderNode folder1 = createFolder("1_Alkaline_Degreasing");
+    stage1TempNode   = createVariable(folder1.getNodeId(), "1_Alkaline_Degreasing/Temperature", "Temperature", Identifiers.Int32, new Variant(50), rwAccess);
+    stage1ActiveNode = createVariable(folder1.getNodeId(), "1_Alkaline_Degreasing/IsActive", "IsActive", Identifiers.Boolean, new Variant(false), rwAccess);
+    stage1HeaterNode = createVariable(folder1.getNodeId(), "1_Alkaline_Degreasing/HeaterOn", "HeaterOn", Identifiers.Boolean, new Variant(false), rwAccess);
+
+    // Папка сушильной камеры с датчиком UART
+    UaFolderNode folder6 = createFolder("6_Drying_Chamber");
+    stage6TempNode   = createVariable(folder6.getNodeId(), "6_Drying_Chamber/TemperatureCelsius", "TemperatureCelsius", Identifiers.Int32, new Variant(55), rwAccess);
+    stage6HumidityNode = createVariable(folder6.getNodeId(), "6_Drying_Chamber/HumidityPercent", "HumidityPercent", Identifiers.Int32, new Variant(20), rwAccess);
+    stage6SensorConnectedNode = createVariable(folder6.getNodeId(), "6_Drying_Chamber/SensorConnected", "SensorConnected", Identifiers.Boolean, new Variant(true), rwAccess);
+}
+\end{lstlisting}
+
+% ========================================================================
+\newpage
+\section{Аппаратный мост и сбор телеметрии (Python / FastAPI / UART)}
+% ========================================================================
+
+Модуль \texttt{hardware\_bridge.py} организует физический контур сбора данных HIL. Скрипт прослушивает порт COM20 с параметрами 115200 8N1 и при получении пакета обновляет структуру сушильной камеры:
+
+\begin{lstlisting}[language=Python, caption=Чтение UART и ретрансляция телеметрии в hardware\_bridge.py]
+async def read_serial_data():
+    global factory_state, ser
+    while True:
+        try:
+            if ser and ser.is_open and ser.in_waiting > 0:
+                line = ser.readline().decode('utf-8', errors='ignore').strip().lower()
+                if 'temp:' in line and 'hum:' in line:
+                    parts = line.split(';')
+                    t = int(parts[0].replace('temp:', '').strip())
+                    h = int(parts[1].replace('hum:', '').strip())
+                    node6 = factory_state["stage_6_drying_chamber"]
+                    node6["temperature_celsius"] = t
+                    node6["humidity_percent"] = h
+                    node6["sensor_connected"] = True
+        except Exception:
+            factory_state["stage_6_drying_chamber"]["sensor_connected"] = False
+        await asyncio.sleep(0.1)
+
+async def forward_to_java_server():
+    while True:
+        try:
+            url = "http://localhost:8080/api/factory-status"
+            payload = json.dumps({"status": "ok", "data": factory_state}).encode('utf-8')
+            req = urllib.request.Request(url, data=payload, headers={'Content-Type': 'application/json'}, method='POST')
+            urllib.request.urlopen(req, timeout=1)
+        except Exception:
+            pass
+        await asyncio.sleep(1)
+\end{lstlisting}
+
+% ========================================================================
+\newpage
+\section{Разработка пользовательских интерфейсов}
+% ========================================================================
+
+\subsection{Графический SCADA-симулятор (PyGame)}
+Клиент визуализирует перемещение заготовок по двум технологическим линиям с независимыми мостовыми манипуляторами. Логика манипулятора построена на конечном автомате:
+
+\begin{lstlisting}[language=Python, caption=Конечный автомат манипулятора в pygame-simulator/main.py]
+# Приоритет 1: Выгрузка готовой детали с последней станции
+last_station = self.stations[-1]
+if last_station.current_part and last_station.current_part.get('ready_for_next'):
+    self.crane_state = "MOVE_TO_PICKUP"
+    self.crane_target = last_station.current_part
+    self.pickup_x = last_station.x
+    self.drop_x = self.x_end
+
+# Приоритет 2: Перемещение между ваннами от конца к началу
+for i in range(len(self.stations) - 2, -1, -1):
+    src_st = self.stations[i]
+    dst_st = self.stations[i + 1]
+    if src_st.current_part and src_st.current_part.get('ready_for_next') and not dst_st.current_part:
+        self.crane_state = "MOVE_TO_PICKUP"
+        self.pickup_x = src_st.x
+        self.drop_x = dst_st.x
+        break
+\end{lstlisting}
+
+\subsection{Интерактивная HMI-панель (React)}
+Веб-интерфейс обеспечивает мониторинг выполнения фаз блок-схемы алгоритма APS, отображение телеметрических карточек 7 стадий и оперативное управление очередью заказов.
+
+\begin{lstlisting}[language=Java, caption=Динамический поллинг метрик и стадий в React дашборде]
+useEffect(() => {
+  const pollFactoryState = async () => {
+    try {
+      const res = await fetch('http://localhost:8080/api/factory-status');
+      const json = await res.json();
+      if (json.status === 'ok') setFactoryStages(json.data);
+    } catch (e) {
+      console.warn('Сервер недоступен:', e);
+    }
+  };
+  const timer = setInterval(pollFactoryState, 500);
+  return () => clearInterval(timer);
+}, []);
+\end{lstlisting}
+
+% ========================================================================
+\newpage
+\section{Оркестрация и развёртывание системы (Launcher.cs)}
+% ========================================================================
+
+Для автономного запуска комплекса без необходимости ручного вызова отдельных терминальных команд разработан модуль \texttt{Launcher.cs}. Оркестратор запускает ядро Java, проверяет доступность TCP-порта 8080, открывает браузер по умолчанию, стартует PyGame-симулятор и регистрирует перехватчики сигналов завершения Win32:
+
+\begin{lstlisting}[language={[Sharp]C}, caption=Координация процессов в Launcher.cs]
+static void Main(string[] args) {
+    SetConsoleCtrlHandler((sig) => { Cleanup(); return true; }, true);
+    AppDomain.CurrentDomain.ProcessExit += (s, e) => Cleanup();
+
+    string currentDir = AppDomain.CurrentDomain.BaseDirectory;
+    string jarPath = Path.Combine(currentDir, "server.jar");
+    string simPath = Path.Combine(currentDir, "simulator.exe");
+
+    serverProcess = Process.Start(new ProcessStartInfo {
+        FileName = "java", Arguments = "-jar \"" + jarPath + "\"",
+        WorkingDirectory = currentDir, UseShellExecute = false
+    });
+
+    int attempts = 0;
+    while (attempts++ < 25) {
+        if (CheckPort(8080)) break;
+        Thread.Sleep(1000);
+    }
+
+    Process.Start("http://localhost:8080");
+    if (File.Exists(simPath)) {
+        simulatorProcess = Process.Start(new ProcessStartInfo { FileName = simPath, WorkingDirectory = currentDir });
+    }
+}
+\end{lstlisting}
+
+% ========================================================================
+\newpage
+\section{Заключение}
+% ========================================================================
+
+Разработанный программно-аппаратный комплекс цифрового двойника технологической линии горячего цинкования подтверждает практическую применимость методов динамического планирования APS в условиях реального промышленного производства. 
+
+Интеграция протокола OPC UA позволила организовать детерминированный обмен технологическими данными между сервером и исполнительными механизмами, а аппаратно-программный мост HIL обеспечил верификацию алгоритмов планирования на реальных физических сигналах микроконтроллеров. Модульная архитектура гарантирует масштабируемость системы и возможность адаптации под смежные гальванические и металлургические производства.
+
+\end{document}
